@@ -3,20 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="@color/mainBackGround">
+    android:background="@color/mainBackGround"
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:id="@+id/linear_layout"
         android:layout_width="412dp"
         android:layout_height="250px"
         android:background="@color/mainBackGround"
+        android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:gravity="center"
         app:layout_constraintVertical_bias="0.0">
 
         <TextView
@@ -41,16 +41,40 @@
         android:id="@+id/linear_layout_bottom"
         android:layout_width="412dp"
         android:layout_height="250px"
-        android:background="@color/mainBackGround"
+        android:background="@color/roundedColourBackground"
         android:gravity="center"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteY="768dp"/>
+        tools:layout_editor_absoluteY="768dp">
 
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/delete_button"
+            android:text="Button 1"
+            android:textColor="@android:color/black" />
 
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/cancel_button"
+            android:text="Button 2"
+            android:textColor="@android:color/black" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/update_button"
+            android:text="Button 3"
+            android:textColor="@android:color/black" />
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
