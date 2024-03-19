@@ -53,7 +53,8 @@
         android:src="@drawable/edit_1479_svgrepo_com"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="60dp"         />
+        android:layout_marginEnd="60dp"
+        android:onClick="onEditButtonClick"/>
 
 
 

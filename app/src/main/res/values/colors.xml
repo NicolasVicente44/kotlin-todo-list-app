@@ -2,7 +2,7 @@
 <resources>
     <color name="todoTitle">#FFFFFF</color>
     <color name="todoDescription">#FFFFFF</color>
-    <color name="todoDueDate">#FFFFFF</color>
+    <color name="todoDueDate">#FF3D37</color>
 
     <color name="mainBackGround">#513FC6</color>
 

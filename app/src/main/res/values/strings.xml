@@ -5,6 +5,7 @@
     <string name="todoDueDate">To Do Due Date</string>
 
     <string name="listTitle">☰ To Do List </string>
+    <string name="detailsTitle">✓ To Do Item </string>
 
 
 </resources>
