@@ -1,0 +1,11 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.COMP3025W24Assignment3" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">#513FC6</item>
+        <item name="colorPrimaryDark">#513FC6</item>
+        <item name="colorAccent">#513FC6</item>
+        <item name="android:navigationBarColor">#513FC6</item>
+    </style>
+
+    <style name="Theme.COMP3025W24Assignment3" parent="Base.Theme.COMP3025W24Assignment3" />
+</resources>
