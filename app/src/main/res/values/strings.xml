@@ -4,8 +4,11 @@
     <string name="todoDescription">To Do Description</string>
     <string name="todoDueDate">To Do Due Date</string>
 
-    <string name="listTitle">☰ To Do List </string>
-    <string name="detailsTitle">✓ To Do Item </string>
+    <string name="listTitle">☰ To Do List</string>
+    <string name="detailsTitle">✓ To Do Item</string>
 
+    <string name="deleteButton">Delete</string>
+    <string name="cancelButton">Cancel</string>
+    <string name="updateButton">Update</string>
 
 </resources>
