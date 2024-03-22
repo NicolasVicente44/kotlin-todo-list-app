@@ -1,4 +1,5 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -16,8 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/todoTitle"
@@ -25,17 +25,13 @@
             android:layout_height="wrap_content"
             android:text="@string/detailsTitle"
             android:textColor="@color/todoTitle"
-            android:textSize="@dimen/cell_text_size"
+            android:textSize="@dimen/title"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-
-            />
-
+            app:layout_constraintTop_toTopOf="parent" />
     </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/linear_layout_bottom"
@@ -47,8 +43,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="768dp">
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:layout_width="400px"
@@ -78,26 +73,215 @@
             android:textAllCaps="false"
             android:textColor="@android:color/black"
             android:textSize="20sp" />
-
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="412dp"
         android:layout_height="400dp"
         android:background="@drawable/rounded_background"
+        android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/linear_layout_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        android:gravity="center"
-        >
+        app:layout_constraintStart_toStartOf="parent">
 
         <CalendarView
             android:id="@+id/calendarView"
-            android:layout_width="350dp"
-            android:layout_height="350dp" />
+            android:layout_width="355dp"
+            android:layout_height="355dp" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="409dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="2dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linear_layout"
+        android:gravity="center_vertical|center_horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/todoTitleDetailsLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/todoDetailsLabel"
+                android:textSize="@dimen/cell_text_size"
+                android:textStyle="bold"
+                android:textColor="@color/todoTitle"
+                android:marginLeft="5dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:orientation="vertical"
+            android:gravity="center_vertical|center_horizontal">
+
+            <TextView
+                android:id="@+id/todoTitleDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="To do Item"
+                android:textSize="@dimen/cell_text_size"
+                android:textStyle="bold"
+                android:textColor="@color/todoTitle"
+                android:layout_gravity="center_vertical"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="412dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+        android:gravity="center_vertical|center_horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/todoDetailsDescriptionLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/todoDetailsLabel"
+                android:textColor="@color/todoTitle"
+                android:textSize="@dimen/detailsDescription"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/todoDetailsDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="To Do Description"
+                android:textColor="@color/todoTitle"
+                android:textSize="@dimen/detailsDescription"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="412dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+        android:gravity="center_vertical|center_horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center_vertical|">
+
+            <TextView
+                android:id="@+id/todoDueDateLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/todoDetailsDescriptionLabel"
+                android:textColor="@color/todoTitle"
+                android:textSize="@dimen/detailsDescription"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:orientation="vertical"
+            android:gravity="center_vertical|">
+
+            <TextView
+                android:id="@+id/todoDueDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Due Date"
+                android:textColor="@color/todoDueDate"
+                android:textSize="@dimen/detailsDescription"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="412dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="1dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
+        android:gravity="center_vertical|center_horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center_vertical|">
+
+            <TextView
+                android:id="@+id/todoStatusLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/todoDetailsStatus"
+                android:textColor="@color/todoTitle"
+                android:textSize="@dimen/detailsDescription"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:orientation="vertical"
+            android:gravity="center_vertical|">
+
+            <Switch
+                android:id="@+id/detailStatusSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                />
+        </LinearLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

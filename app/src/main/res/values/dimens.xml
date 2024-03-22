@@ -5,4 +5,8 @@
     <dimen name="cell_margin">10dp</dimen>
     <dimen name="cell_text_size">24sp</dimen>
     <dimen name="dialog_height">120dp</dimen>
+    <dimen name="title">28sp</dimen>
+
+    <dimen name="detailsDescription">14sp</dimen>
+
 </resources>

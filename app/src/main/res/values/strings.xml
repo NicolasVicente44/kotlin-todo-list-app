@@ -11,4 +11,13 @@
     <string name="cancelButton">Cancel</string>
     <string name="updateButton">Update</string>
 
+
+    <string name="todoDetailsLabel">To Do Item:</string>
+    <string name="todoDetailsDescriptionLabel">To Do Notes:</string>
+    <string name="todoDetailsDueDate">To Do Notes:</string>
+    <string name="todoDetailsStatus">To Do Completed:</string>
+
+
+
+
 </resources>
