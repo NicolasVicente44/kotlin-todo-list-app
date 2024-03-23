@@ -12,15 +12,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.COMP3025W24Assignment3"
         tools:targetApi="31">
+
+        <!-- Define the splash screen activity as launcher -->
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".SplashScreenActivity"
+            android:exported="true"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <!-- Define other activities -->
+        <activity android:name=".MainActivity" />
         <activity android:name=".ToDoItemDetailsActivity" />
         <activity android:name=".CreateNewTodoActivity" />
 
