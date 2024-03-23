@@ -5,17 +5,20 @@
     <string name="todoDueDate">To Do Due Date</string>
 
     <string name="listTitle">☰ To Do List</string>
-    <string name="detailsTitle">✓ To Do Item</string>
+    <string name="detailsTitle">✓ To Do Details</string>
 
     <string name="deleteButton">Delete</string>
     <string name="cancelButton">Cancel</string>
     <string name="updateButton">Update</string>
+    <string name="saveButton">Save</string>
 
+    <string name="fabDesc">Add a Todo</string>
 
     <string name="todoDetailsLabel">To Do Item:</string>
     <string name="todoDetailsDescriptionLabel">To Do Notes:</string>
     <string name="todoDetailsDueDate">To Do Notes:</string>
     <string name="todoDetailsStatus">To Do Completed:</string>
+    <string name="todoCreateTitle">+ New To Do</string>
 
 
 

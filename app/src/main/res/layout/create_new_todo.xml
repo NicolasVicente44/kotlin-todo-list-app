@@ -23,7 +23,7 @@
             android:id="@+id/todoTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/detailsTitle"
+            android:text="@string/todoCreateTitle"
             android:textColor="@color/todoTitle"
             android:textSize="@dimen/title"
             android:textStyle="bold"
@@ -49,16 +49,6 @@
             android:layout_width="400px"
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
-            android:background="@drawable/delete_button"
-            android:text="@string/deleteButton"
-            android:textAllCaps="false"
-            android:textColor="@android:color/black"
-            android:textSize="20sp" />
-
-        <Button
-            android:layout_width="400px"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
             android:background="@drawable/cancel_button"
             android:text="@string/cancelButton"
             android:textAllCaps="false"
@@ -69,7 +59,7 @@
             android:layout_width="400px"
             android:layout_height="wrap_content"
             android:background="@drawable/update_button"
-            android:text="@string/updateButton"
+            android:text="@string/saveButton"
             android:textAllCaps="false"
             android:textColor="@android:color/black"
             android:textSize="20sp" />
@@ -129,12 +119,12 @@
             android:orientation="vertical"
             android:gravity="center_vertical">
 
-            <TextView
+            <EditText
                 android:id="@+id/todoTitleDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="To do Item"
+                android:text="                                   "
                 android:textColor="@color/todoTitle"
                 android:textSize="@dimen/cell_text_size"
                 android:textStyle="bold" />
@@ -179,15 +169,14 @@
             android:orientation="vertical"
             android:gravity="center_vertical">
 
-            <TextView
+            <EditText
                 android:id="@+id/todoDetailsDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="To Do Description"
-                android:textColor="@color/todoTitle"
+                android:text="                                                             "
                 android:textSize="@dimen/detailsDescription"
                 android:textStyle="bold"
-                android:layout_gravity="center_vertical"/>
+                />
         </LinearLayout>
     </LinearLayout>
 
@@ -227,11 +216,11 @@
             android:orientation="vertical"
             android:gravity="center_vertical">
 
-            <TextView
+            <EditText
                 android:id="@+id/todoDueDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="To Do Due Date"
+                android:text="                                                             "
                 android:textColor="@color/todoDueDate"
                 android:textSize="@dimen/detailsDescription"
                 android:textStyle="bold" />
@@ -241,7 +230,7 @@
     <LinearLayout
         android:layout_width="412dp"
         android:layout_height="80dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="0dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
