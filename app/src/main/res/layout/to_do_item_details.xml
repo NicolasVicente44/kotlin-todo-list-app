@@ -79,7 +79,7 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="412dp"
-        android:layout_height="350dp"
+        android:layout_height="320dp"
         android:background="@drawable/rounded_background"
         android:gravity="center"
         android:orientation="vertical"
@@ -90,8 +90,8 @@
 
         <CalendarView
             android:id="@+id/calendarView"
-            android:layout_width="350dp"
-            android:layout_height="330dp" />
+            android:layout_width="330dp"
+            android:layout_height="310dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -244,7 +244,6 @@
         android:layout_height="80dp"
         android:layout_marginTop="1dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
