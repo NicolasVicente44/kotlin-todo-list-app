@@ -1,11 +1,21 @@
 package ca.georgiancollege.comp3025_w24_assignment_3
-
+import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import ca.georgiancollege.comp3025_w24_assignment_3.databinding.ToDoItemBinding
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import android.view.View
 
-class RecyclerViewAdapter(private val todos: List<TodoItem>) :
+
+
+
+class RecyclerViewAdapter(private val todos: List<TodoItem>, private val context: Context) :
     RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: ToDoItemBinding) : RecyclerView.ViewHolder(binding.root)
@@ -18,20 +28,58 @@ class RecyclerViewAdapter(private val todos: List<TodoItem>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val todo = todos[position]
         holder.binding.apply {
+
             todoTitle.text = todo.title
             todoDescription.text = todo.description
-            todoDueDate.text = todo.dueDate
-            todoMainStatusSwitch.isChecked = false
 
+            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val currentDate = sdf.format(Date())
+            val dueDate = todo.dueDate
 
-            root.setOnClickListener {
+            // Check if due date is today
+            val today = dueDate.isNotEmpty() && dueDate == currentDate
 
+            // Check if due date is past due
+            val pastDue = if (dueDate.isNotEmpty()) {
+                sdf.parse(dueDate)?.let { it.before(Date()) } ?: false
+            } else {
+                false
+            }
 
+            // Set text color based on due date
+            when {
+                today -> todoDueDate.setTextColor(ContextCompat.getColor(root.context, R.color.text_due_today))
+                pastDue -> todoDueDate.setTextColor(ContextCompat.getColor(root.context, R.color.text_past_due))
+                else -> todoDueDate.setTextColor(ContextCompat.getColor(root.context, R.color.text_normal))
+            }
+
+            todoDueDate.text = dueDate
+            todoMainStatusSwitch.isChecked = todo.status
+
+            // Check if the click was on the edit image view
+            svgImageView.setOnClickListener {
+                // Navigate to ToDoItemDetailsActivity and pass todo item details
+                val intent = Intent(context, ToDoItemDetailsActivity::class.java)
+                intent.putExtra("TODO_TITLE", todo.title)
+                intent.putExtra("TODO_DESCRIPTION", todo.description)
+                intent.putExtra("TODO_DUE_DATE", todo.dueDate)
+                intent.putExtra("TODO_STATUS", todo.status)
+                context.startActivity(intent)
+            }
+
+            todoMainStatusSwitch.setOnCheckedChangeListener { _, isChecked ->
+                todo.status = isChecked
+                setOpacityBasedOnSwitchStatus(root, isChecked)
             }
         }
+    }
+
+    private fun setOpacityBasedOnSwitchStatus(view: View, isChecked: Boolean) {
+        view.alpha = if (isChecked) 0.5f else 1.0f
     }
 
     override fun getItemCount(): Int {
         return todos.size
     }
 }
+

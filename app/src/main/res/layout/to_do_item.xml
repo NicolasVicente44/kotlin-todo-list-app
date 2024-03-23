@@ -43,6 +43,7 @@
         android:checked="false"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
+
         />
 
     <!-- This is the ImageView to display the SVG -->

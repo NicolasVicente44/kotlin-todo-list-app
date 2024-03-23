@@ -9,37 +9,44 @@ package ca.georgiancollege.comp3025_w24_assignment_3
  * this part is only the UI for the application with limited functionality, of which will be built upon in assignment 4
  */
 
-
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import ca.georgiancollege.comp3025_w24_assignment_3.databinding.ActivityMainBinding
 import ca.georgiancollege.comp3025_w24_assignment_3.TodoItem
-
+import android.content.Intent
+import android.view.View
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        //view binding setup
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //recycler view set up
+        // Recycler view setup
         val recyclerView = binding.FirstRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         val todoList = listOf(
-            TodoItem("Title 1", "Description 1", "Due Date 1"),
-            TodoItem("Title 2", "Description 2", "Due Date 2"),
-            TodoItem("Title 3", "Description 3", "Due Date 3")
+            TodoItem("Title 1", "Description 1", "2024-02-23"),
+            TodoItem("Title 2", "Description 2"),
+            TodoItem("Title 3", "Description 3"),
+            TodoItem("Title 4", "Description 4", "2024-05-23")
         )
 
-
-        //recycler view adapter setup
-        val adapter = RecyclerViewAdapter(todoList)
+        // Recycler view adapter setup with context parameter passed
+        val adapter = RecyclerViewAdapter(todoList, this)
         recyclerView.adapter = adapter
+
+        // Find the FloatingActionButton and set OnClickListener
+        val fab = binding.addMovieFAB
+        fab.setOnClickListener {
+            // Start the CreateNewTodoActivity
+            val intent = Intent(this, CreateNewTodoActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

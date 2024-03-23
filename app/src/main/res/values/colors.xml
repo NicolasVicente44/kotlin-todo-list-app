@@ -10,10 +10,14 @@
     <color name="fabColour">#535050</color>
 
 
+    <color name="switch_thumb_color">#FF5722</color>
 
     <color name="switch_thumb_on">#FF4081</color>
     <color name="switch_thumb_off">#9E9E9E</color>
     <color name="switch_track_on">#FF80AB</color>
     <color name="switch_track_off">#BDBDBD</color>
+    <color name="text_normal">#888888</color> <!-- Light gray color for normal due dates -->
+    <color name="text_past_due">#FF0000</color> <!-- Red color for past due dates -->
+    <color name="text_due_today">#F1B457</color> <!-- Yellow color for today due dates -->
 
 </resources>
