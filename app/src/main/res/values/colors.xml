@@ -10,5 +10,9 @@
 
 
 
+    <color name="switch_thumb_on">#FF4081</color>
+    <color name="switch_thumb_off">#9E9E9E</color>
+    <color name="switch_track_on">#FF80AB</color>
+    <color name="switch_track_off">#BDBDBD</color>
 
 </resources>

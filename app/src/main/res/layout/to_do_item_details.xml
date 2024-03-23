@@ -78,7 +78,7 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="412dp"
-        android:layout_height="400dp"
+        android:layout_height="350dp"
         android:background="@drawable/rounded_background"
         android:gravity="center"
         android:orientation="vertical"
@@ -89,8 +89,8 @@
 
         <CalendarView
             android:id="@+id/calendarView"
-            android:layout_width="355dp"
-            android:layout_height="355dp" />
+            android:layout_width="350dp"
+            android:layout_height="330dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -102,7 +102,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linear_layout"
-        android:gravity="center_vertical|center_horizontal">
+        android:gravity="center_vertical">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -119,7 +119,7 @@
                 android:textSize="@dimen/cell_text_size"
                 android:textStyle="bold"
                 android:textColor="@color/todoTitle"
-                android:marginLeft="5dp"/>
+                android:layout_marginLeft="5dp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -127,17 +127,17 @@
             android:layout_height="match_parent"
             android:layout_weight="1.5"
             android:orientation="vertical"
-            android:gravity="center_vertical|center_horizontal">
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/todoTitleDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:text="To do Item"
-                android:textSize="@dimen/cell_text_size"
-                android:textStyle="bold"
                 android:textColor="@color/todoTitle"
-                android:layout_gravity="center_vertical"/>
+                android:textSize="@dimen/cell_text_size"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 
@@ -151,7 +151,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-        android:gravity="center_vertical|center_horizontal">
+        android:gravity="center_vertical">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -200,24 +200,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
-        android:gravity="center_vertical|center_horizontal">
+        android:gravity="center_vertical">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center_vertical|">
+            android:gravity="center_vertical"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/todoDueDateLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:text="@string/todoDetailsDescriptionLabel"
                 android:textColor="@color/todoTitle"
                 android:textSize="@dimen/detailsDescription"
-                android:textStyle="bold"
-                android:layout_marginLeft="5dp"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -225,13 +225,13 @@
             android:layout_height="match_parent"
             android:layout_weight="1.5"
             android:orientation="vertical"
-            android:gravity="center_vertical|">
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/todoDueDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Due Date"
+                android:text="To Do Due Date"
                 android:textColor="@color/todoDueDate"
                 android:textSize="@dimen/detailsDescription"
                 android:textStyle="bold" />
@@ -242,38 +242,37 @@
         android:layout_width="412dp"
         android:layout_height="80dp"
         android:layout_marginTop="1dp"
-        android:layout_marginBottom="1dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
-        android:gravity="center_vertical|center_horizontal">
+        android:layout_marginBottom="0dp">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center_vertical|">
+            android:gravity="center_vertical"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/todoStatusLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:text="@string/todoDetailsStatus"
                 android:textColor="@color/todoTitle"
                 android:textSize="@dimen/detailsDescription"
-                android:textStyle="bold"
-                android:layout_marginLeft="5dp"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.5"
-            android:orientation="vertical"
-            android:gravity="center_vertical|">
+            android:gravity="center_vertical"
+            android:orientation="vertical">
 
             <Switch
                 android:id="@+id/detailStatusSwitch"
