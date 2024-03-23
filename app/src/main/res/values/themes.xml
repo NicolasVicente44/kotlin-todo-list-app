@@ -4,7 +4,7 @@
         <item name="colorPrimary">#513FC6</item>
         <item name="colorPrimaryDark">#513FC6</item>
         <item name="colorAccent">#513FC6</item>
-        <item name="android:navigationBarColor">#513FC6</item>
+        <item name="android:navigationBarColor">#FEF7FF</item>
     </style>
 
     <style name="Theme.COMP3025W24Assignment3" parent="Base.Theme.COMP3025W24Assignment3" />

@@ -1,9 +1,11 @@
 package ca.georgiancollege.comp3025_w24_assignment_3
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.Switch
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -14,6 +16,11 @@ import java.util.Locale
 
 class ToDoItemDetailsActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        // Set the navigation bar icons color to gray
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+        }
         super.onCreate(savedInstanceState)
         val binding = ToDoItemDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
