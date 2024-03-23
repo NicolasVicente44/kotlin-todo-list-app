@@ -13,6 +13,9 @@ import java.util.Locale
 import android.view.View
 
 
+/**
+ * adapter class that bridges tthe data and the UI compoenents, including the recycler view/list
+ */
 
 
 class RecyclerViewAdapter(private val todos: List<TodoItem>, private val context: Context) :

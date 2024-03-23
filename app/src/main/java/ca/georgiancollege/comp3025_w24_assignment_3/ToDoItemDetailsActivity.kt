@@ -14,6 +14,10 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+
+/**
+ * the to do details class file that handles the funcitonality for the to do details activity and will handle the edit crud functinality in assignment 4
+ */
 class ToDoItemDetailsActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 

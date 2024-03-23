@@ -1,5 +1,10 @@
 package ca.georgiancollege.comp3025_w24_assignment_3
 
+/**
+ * create new todo class that handles the create a new todo funcitonality once the user clicks on the
+ * floating actions button in the main activity
+ */
+
 import android.app.Activity
 import android.os.Build
 import android.os.Bundle

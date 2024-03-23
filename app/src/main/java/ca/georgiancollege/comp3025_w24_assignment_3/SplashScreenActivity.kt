@@ -1,5 +1,9 @@
 package ca.georgiancollege.comp3025_w24_assignment_3
 
+
+/**
+ * Splash screen clss file to load a splash screen for 2 seconds prior to the main acitivity load
+ */
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle

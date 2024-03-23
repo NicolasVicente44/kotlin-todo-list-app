@@ -7,6 +7,7 @@ package ca.georgiancollege.comp3025_w24_assignment_3
  * Main Activity file
  *To do list UI app. This is part one of the todo list application that uses firebase and and authentication.
  * this part is only the UI for the application with limited functionality, of which will be built upon in assignment 4
+ * Version 1.00
  */
 
 import androidx.appcompat.app.AppCompatActivity
