@@ -10,7 +10,7 @@
     <string name="deleteButton">Delete</string>
     <string name="cancelButton">Cancel</string>
     <string name="updateButton">Update</string>
-    <string name="saveButton">Save</string>
+    <string name="saveButton">Create</string>
 
     <string name="fabDesc">Add a Todo</string>
 

@@ -39,11 +39,13 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         val todoList = listOf(
-            TodoItem("Title 1", "Description 1", "2024-02-23"),
-            TodoItem("Title 2"),
-            TodoItem("Title 3", "Description 3"),
-            TodoItem("Title 4", "Description 4", "2024-05-23")
+            TodoItem("Walk dog", "Take dog on a walk a round the block", "2024-02-23"),
+            TodoItem("Finish homework"),
+            TodoItem("Read Other book", "Read chapters 4 and 5 of book", "2024-03-23"),
+            TodoItem("Do laundry", "Take clothes out of dryer and iron them"),
+            TodoItem("Read book", "Read chapters 4 and 5 of book", "2024-05-23")
         )
+
 
         // Recycler view adapter setup with context parameter passed
         val adapter = RecyclerViewAdapter(todoList, this)
@@ -56,6 +58,8 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, CreateNewTodoActivity::class.java)
             startActivity(intent)
         }
+
+
     }
 
 

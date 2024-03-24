@@ -28,12 +28,14 @@ class RecyclerViewAdapter(private val todos: List<TodoItem>, private val context
         return ViewHolder(binding)
     }
 
+
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val todo = todos[position]
         holder.binding.apply {
 
             todoTitle.text = todo.title
-            todoDescription.text = todo.description
+            todoDescription.text = truncateDescription(todo.description)
 
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             val currentDate = sdf.format(Date())
@@ -76,6 +78,16 @@ class RecyclerViewAdapter(private val todos: List<TodoItem>, private val context
             }
         }
     }
+
+    private fun truncateDescription(description: String): String {
+        val maxLength = 25
+        return if(description.length > maxLength) {
+            "${description.substring(0, maxLength)}..."
+        } else {
+            description
+        }
+    }
+
 
     private fun setOpacityBasedOnSwitchStatus(view: View, isChecked: Boolean) {
         view.alpha = if (isChecked) 0.5f else 1.0f
