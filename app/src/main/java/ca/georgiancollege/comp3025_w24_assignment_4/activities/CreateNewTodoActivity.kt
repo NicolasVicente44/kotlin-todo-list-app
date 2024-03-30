@@ -1,32 +1,34 @@
-package ca.georgiancollege.comp3025_w24_assignment_4
+package ca.georgiancollege.comp3025_w24_assignment_4.activities
+
+/**
+ * create new todo class that handles the create a new todo funcitonality once the user clicks on the
+ * floating actions button in the main activity
+ */
+
 import android.app.Activity
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
-import android.widget.Switch
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import ca.georgiancollege.comp3025_w24_assignment_4.databinding.ToDoItemDetailsBinding
+import ca.georgiancollege.comp3025_w24_assignment_4.R
+import ca.georgiancollege.comp3025_w24_assignment_4.databinding.CreateNewTodoBinding
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+class CreateNewTodoActivity : Activity() {
+    private lateinit var binding: CreateNewTodoBinding
 
-/**
- * the to do details class file that handles the funcitonality for the to do details activity and will handle the edit crud functinality in assignment 4
- */
-class ToDoItemDetailsActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-
         // Set the navigation bar icons color to gray
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
         }
+
         super.onCreate(savedInstanceState)
-        val binding = ToDoItemDetailsBinding.inflate(layoutInflater)
+        binding = CreateNewTodoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
@@ -34,24 +36,6 @@ class ToDoItemDetailsActivity : Activity() {
             binding.todoDueDate.setText(selectedDate)
             updateDueDateTextColor(binding.todoDueDate, selectedDate)
         }
-
-        // Retrieve todo item details from intent extras
-        val title = intent.getStringExtra("TODO_TITLE")
-        val description = intent.getStringExtra("TODO_DESCRIPTION")
-        val dueDate = intent.getStringExtra("TODO_DUE_DATE")
-        val status = intent.getBooleanExtra("TODO_STATUS", false)
-
-        // Update EditText fields with todo item details
-        binding.todoTitleDetails.setText(title)
-        binding.todoDetailsDescription.setText(description)
-        binding.todoDueDate.setText(dueDate)
-        binding.detailStatusSwitch.isChecked = status
-
-        // Set text color based on due date
-        updateDueDateTextColor(binding.todoDueDate, dueDate)
-
-        // Enable the back button in the action bar
-        actionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun updateDueDateTextColor(todoDueDate: TextView, date: String?) {
@@ -78,17 +62,6 @@ class ToDoItemDetailsActivity : Activity() {
             }
         }
     }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle back button click event
-        if (item.itemId == android.R.id.home) {
-            // Pass the current state of the switch back to the calling activity
-            val intent = Intent()
-            intent.putExtra("UPDATED_TODO_STATUS", (findViewById<Switch>(R.id.detailStatusSwitch)).isChecked)
-            setResult(RESULT_OK, intent)
-            finish() // Finish the activity
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
 }
+
+

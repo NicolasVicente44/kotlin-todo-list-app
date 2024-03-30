@@ -15,7 +15,7 @@
 
         <!-- Define the splash screen activity as launcher -->
         <activity
-            android:name=".SplashScreenActivity"
+            android:name=".activities.SplashScreenActivity"
             android:exported="true"
             >
             <intent-filter>
@@ -25,9 +25,9 @@
         </activity>
 
         <!-- Define other activities -->
-        <activity android:name=".MainActivity" />
-        <activity android:name=".ToDoItemDetailsActivity" />
-        <activity android:name=".CreateNewTodoActivity" />
+        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.ToDoItemDetailsActivity" />
+        <activity android:name=".activities.CreateNewTodoActivity" />
 
     </application>
 

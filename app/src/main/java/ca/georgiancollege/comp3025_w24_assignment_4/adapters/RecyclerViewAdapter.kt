@@ -1,4 +1,4 @@
-package ca.georgiancollege.comp3025_w24_assignment_4
+package ca.georgiancollege.comp3025_w24_assignment_4.adapters
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -10,6 +10,9 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import android.view.View
+import ca.georgiancollege.comp3025_w24_assignment_4.R
+import ca.georgiancollege.comp3025_w24_assignment_4.activities.ToDoItemDetailsActivity
+import ca.georgiancollege.comp3025_w24_assignment_4.models.TodoItem
 
 
 /**
@@ -52,9 +55,15 @@ class RecyclerViewAdapter(private val todos: List<TodoItem>, private val context
 
             // Set text color based on due date
             when {
-                today -> todoDueDate.setTextColor(ContextCompat.getColor(root.context, R.color.text_due_today))
-                pastDue -> todoDueDate.setTextColor(ContextCompat.getColor(root.context, R.color.text_past_due))
-                else -> todoDueDate.setTextColor(ContextCompat.getColor(root.context, R.color.text_normal))
+                today -> todoDueDate.setTextColor(ContextCompat.getColor(root.context,
+                    R.color.text_due_today
+                ))
+                pastDue -> todoDueDate.setTextColor(ContextCompat.getColor(root.context,
+                    R.color.text_past_due
+                ))
+                else -> todoDueDate.setTextColor(ContextCompat.getColor(root.context,
+                    R.color.text_normal
+                ))
             }
 
             todoDueDate.text = dueDate

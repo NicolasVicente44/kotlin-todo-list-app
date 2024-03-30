@@ -1,4 +1,4 @@
-package ca.georgiancollege.comp3025_w24_assignment_4
+package ca.georgiancollege.comp3025_w24_assignment_4.activities
 
 
 /**
@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import ca.georgiancollege.comp3025_w24_assignment_4.R
 
 class SplashScreenActivity : AppCompatActivity() {
 

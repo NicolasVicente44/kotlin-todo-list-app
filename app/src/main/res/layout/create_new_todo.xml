@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/mainBackGround"
-    tools:context=".CreateNewTodoActivity">
+    tools:context=".activities.CreateNewTodoActivity">
 
     <LinearLayout
         android:id="@+id/linear_layout"

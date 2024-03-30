@@ -1,4 +1,4 @@
-package ca.georgiancollege.comp3025_w24_assignment_4
+package ca.georgiancollege.comp3025_w24_assignment_4.activities
 
 /**
  * Nicolas Vicente
@@ -17,6 +17,8 @@ import ca.georgiancollege.comp3025_w24_assignment_4.databinding.ActivityMainBind
 import android.content.Intent
 import android.os.Build
 import android.view.View
+import ca.georgiancollege.comp3025_w24_assignment_4.adapters.RecyclerViewAdapter
+import ca.georgiancollege.comp3025_w24_assignment_4.models.TodoItem
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
