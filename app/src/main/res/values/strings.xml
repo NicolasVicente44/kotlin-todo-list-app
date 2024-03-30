@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">COMP3025-W24-Week-9</string>
+    <string name="app_name">COMP3025-W24-Assignment-4</string>
     <string name="todoTitle">To Do Item</string>
     <string name="todoDescription">To Do Description</string>
     <string name="todoDueDate">To Do Due Date</string>
