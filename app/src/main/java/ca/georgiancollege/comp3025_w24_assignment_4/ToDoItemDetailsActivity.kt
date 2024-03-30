@@ -1,4 +1,4 @@
-package ca.georgiancollege.comp3025_w24_assignment_3
+package ca.georgiancollege.comp3025_w24_assignment_4
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
@@ -9,7 +9,7 @@ import android.view.View
 import android.widget.Switch
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import ca.georgiancollege.comp3025_w24_assignment_3.databinding.ToDoItemDetailsBinding
+import ca.georgiancollege.comp3025_w24_assignment_4.databinding.ToDoItemDetailsBinding
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale

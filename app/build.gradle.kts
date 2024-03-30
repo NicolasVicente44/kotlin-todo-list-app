@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "ca.georgiancollege.comp3025_w24_assignment_3"
+    namespace = "ca.georgiancollege.comp3025_w24_assignment_4"
     compileSdk = 34
 
 
@@ -14,7 +14,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "ca.georgiancollege.comp3025_w24_assignment_3"
+        applicationId = "ca.georgiancollege.comp3025_w24_assignment_4"
         minSdk = 21
         targetSdk = 34
         versionCode = 1
