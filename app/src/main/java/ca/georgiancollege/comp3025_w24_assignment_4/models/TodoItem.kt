@@ -16,7 +16,7 @@ data class TodoItem(
 ) {
     companion object {
 
-        //funciton to get currenct date and set the default due date equal to the current date
+        //function to get current date and set the default due date equal to the current date
         private fun getCurrentDate(): String {
             val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             return dateFormat.format(Date())

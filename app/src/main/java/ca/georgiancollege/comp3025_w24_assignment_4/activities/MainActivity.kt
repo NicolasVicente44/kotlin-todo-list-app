@@ -39,11 +39,11 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         val todoList = listOf(
-            TodoItem("Walk dog", "Take dog on a walk a round the block", "2024-02-23"),
+            TodoItem("Walk dog", "Take dog on a walk a round the block", true, "2024-02-23"),
             TodoItem("Finish homework"),
-            TodoItem("Read Other book", "Read chapters 4 and 5 of book", "2024-03-23"),
+            TodoItem("Read Other book", "Read chapters 4 and 5 of book", true, "2024-03-23"),
             TodoItem("Do laundry", "Take clothes out of dryer and iron them"),
-            TodoItem("Read book", "Read chapters 4 and 5 of book", "2024-05-23")
+            TodoItem("Read book", "Read chapters 4 and 5 of book", true, "2024-05-23")
         )
 
 
