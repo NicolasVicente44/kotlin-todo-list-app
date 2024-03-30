@@ -1,4 +1,4 @@
-package ca.georgiancollege.comp3025_w24_assignment_4
+package ca.georgiancollege.comp3025_w24_assignment_3
 
 /**
  * Nicolas Vicente
@@ -13,10 +13,12 @@ package ca.georgiancollege.comp3025_w24_assignment_4
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import ca.georgiancollege.comp3025_w24_assignment_4.databinding.ActivityMainBinding
+import ca.georgiancollege.comp3025_w24_assignment_3.databinding.ActivityMainBinding
+import ca.georgiancollege.comp3025_w24_assignment_3.TodoItem
 import android.content.Intent
 import android.os.Build
 import android.view.View
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

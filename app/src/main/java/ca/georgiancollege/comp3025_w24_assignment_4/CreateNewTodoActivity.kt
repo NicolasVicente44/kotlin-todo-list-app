@@ -1,4 +1,4 @@
-package ca.georgiancollege.comp3025_w24_assignment_4
+package ca.georgiancollege.comp3025_w24_assignment_3
 
 /**
  * create new todo class that handles the create a new todo funcitonality once the user clicks on the
@@ -12,7 +12,7 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import ca.georgiancollege.comp3025_w24_assignment_4.databinding.CreateNewTodoBinding
+import ca.georgiancollege.comp3025_w24_assignment_3.databinding.CreateNewTodoBinding
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
