@@ -86,7 +86,7 @@
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="412dp"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:layout_marginTop="2dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -134,7 +134,7 @@
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="412dp"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:layout_marginTop="1dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -183,7 +183,7 @@
     <LinearLayout
         android:id="@+id/linearLayout5"
         android:layout_width="412dp"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:layout_marginTop="1dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -228,8 +228,9 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout6"
         android:layout_width="412dp"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:layout_marginTop="0dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -264,6 +265,51 @@
 
             <Switch
                 android:id="@+id/detailStatusSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout7"
+        android:layout_width="412dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
+        android:layout_marginBottom="0dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/calendarStatusLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="@string/calendarStatusLabel"
+                android:textColor="@color/todoTitle"
+                android:textSize="@dimen/detailsDescription"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <Switch
+                android:id="@+id/calendarStatusSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />
