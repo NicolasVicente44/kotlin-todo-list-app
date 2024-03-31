@@ -20,7 +20,7 @@ import ca.georgiancollege.comp3025_w24_assignment_4.models.TodoItem
  */
 
 
-class RecyclerViewAdapter(private val todos: List<TodoItem>, private val context: Context) :
+class RecyclerViewAdapter(var todos: List<TodoItem>, private val context: Context) :
     RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: ToDoItemBinding) : RecyclerView.ViewHolder(binding.root)

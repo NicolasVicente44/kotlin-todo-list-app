@@ -1,5 +1,6 @@
 package ca.georgiancollege.comp3025_w24_assignment_4.data
 
+import android.util.Log
 import ca.georgiancollege.comp3025_w24_assignment_4.models.TodoItem
 import com.google.firebase.firestore.FirebaseFirestore
 import java.lang.Exception
@@ -12,6 +13,7 @@ class DataManager {
         todoCollection.add(todoItem)
             .addOnSuccessListener { documentReference ->
                 onSuccess(documentReference.id)
+                Log.d("MY LOG", "todos retrieved: ${todoItem}")
             }
             .addOnFailureListener { exception ->
                 onFailure(exception)

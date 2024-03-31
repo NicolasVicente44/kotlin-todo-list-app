@@ -22,6 +22,7 @@ class TodoItemViewModel(private val dataManager: DataManager = DataManager()) : 
     fun getAllTodoItems(onSuccess: (List<TodoItem>) -> Unit, onFailure: (Exception) -> Unit) {
         viewModelScope.launch {
             dataManager.getAllTodoItems(onSuccess, onFailure)
+
         }
     }
 
