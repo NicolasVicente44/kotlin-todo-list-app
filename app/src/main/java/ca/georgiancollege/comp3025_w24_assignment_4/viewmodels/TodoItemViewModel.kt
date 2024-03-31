@@ -1,37 +1,45 @@
 package ca.georgiancollege.comp3025_w24_assignment_4.viewmodels
 
-import android.util.Log
-import androidx.constraintlayout.widget.ConstraintLayoutStates.TAG
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import ca.georgiancollege.comp3025_w24_assignment_4.data.DataManager
 import ca.georgiancollege.comp3025_w24_assignment_4.models.TodoItem
-import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.launch
 
-class TodoItemViewModel : ViewModel() {
+class TodoItemViewModel(private val dataManager: DataManager = DataManager()) : ViewModel() {
 
-    private val db = FirebaseFirestore.getInstance()
-    private val todoCollection = db.collection("todos")
-
-    fun addTodoItem(todoItem: TodoItem) {
-        todoCollection.add(todoItem)
-            .addOnSuccessListener { documentReference ->
-                // Handle success
-
-                Log.d(TAG, "Todo item added successfully with ID: ${documentReference.id}")
-
-            }
-            .addOnFailureListener { exception ->
-                // Handle failure
-
-
-                Log.e(TAG, "Error adding todo item", exception)
-
-            }
+    fun addTodoItem(todoItem: TodoItem, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        viewModelScope.launch {
+            dataManager.createTodoItem(todoItem,
+                {
+                    onSuccess()
+                },
+                onFailure
+            )
+        }
     }
 
+    fun getAllTodoItems(onSuccess: (List<TodoItem>) -> Unit, onFailure: (Exception) -> Unit) {
+        viewModelScope.launch {
+            dataManager.getAllTodoItems(onSuccess, onFailure)
+        }
+    }
 
+    fun getTodoItemById(documentId: String, onSuccess: (TodoItem?) -> Unit, onFailure: (Exception) -> Unit) {
+        viewModelScope.launch {
+            dataManager.getTodoItemById(documentId, onSuccess, onFailure)
+        }
+    }
 
+    fun updateTodoItem(todoItem: TodoItem, documentId: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        viewModelScope.launch {
+            dataManager.updateTodoItem(todoItem, documentId, onSuccess, onFailure)
+        }
+    }
 
-
-
-    // Implement similar methods for update, delete, and query operations
+    fun deleteTodoItem(documentId: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        viewModelScope.launch {
+            dataManager.deleteTodoItem(documentId, onSuccess, onFailure)
+        }
+    }
 }
