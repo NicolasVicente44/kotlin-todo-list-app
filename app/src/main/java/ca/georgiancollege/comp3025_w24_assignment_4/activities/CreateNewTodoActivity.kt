@@ -6,6 +6,7 @@ package ca.georgiancollege.comp3025_w24_assignment_4.activities
  */
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -74,8 +75,8 @@ class CreateNewTodoActivity : Activity() {
                 // Handle success scenario here
                 // For example, show a toast message indicating success
                 showToast("Todo created successfully")
-                finish() // Close the activity after successfully creating the todo
-
+                val intent = Intent(this@CreateNewTodoActivity, MainActivity::class.java)
+                startActivity(intent)
             },
             { exception ->
                 // Handle failure scenario here
