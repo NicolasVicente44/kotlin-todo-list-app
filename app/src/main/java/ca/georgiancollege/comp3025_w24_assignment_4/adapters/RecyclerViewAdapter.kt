@@ -68,6 +68,7 @@ class RecyclerViewAdapter(
         notifyDataSetChanged()
     }
 
+
     override fun getItemCount(): Int {
         return dataSet.size
     }

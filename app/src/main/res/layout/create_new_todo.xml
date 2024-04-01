@@ -125,7 +125,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="                                   "
+                android:text=""
                 android:textColor="@color/todoTitle"
                 android:textSize="@dimen/cell_text_size"
                 android:textStyle="bold" />
@@ -174,7 +174,7 @@
                 android:id="@+id/todoCreateDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="                                                             "
+                android:text=""
                 android:textSize="@dimen/detailsDescription"
                 android:textStyle="bold"
                 />
@@ -221,7 +221,7 @@
                 android:id="@+id/todoCreateDueDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="                                                             "
+                android:text=""
                 android:textColor="@color/todoDueDate"
                 android:textSize="@dimen/detailsDescription"
                 android:textStyle="bold" />

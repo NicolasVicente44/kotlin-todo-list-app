@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ca.georgiancollege.comp3025_w24_assignment_4.data.DataManager
 import ca.georgiancollege.comp3025_w24_assignment_4.models.TodoItem
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class TodoItemViewModel(private val dataManager: DataManager = DataManager()) : ViewModel() {
@@ -27,13 +26,10 @@ class TodoItemViewModel(private val dataManager: DataManager = DataManager()) : 
     }
 
     fun getAllTodoItems() {
-        viewModelScope.launch(Dispatchers.Main) {
-            dataManager.getAllTodoItems { todos ->
-                _allTodoItems.postValue(todos)
-            }
+        dataManager.getAllTodoItems { todos ->
+            _allTodoItems.postValue(todos)
         }
     }
-
 
     fun getTodoItemById(documentId: String, onSuccess: (TodoItem?) -> Unit, onFailure: (Exception) -> Unit) {
         viewModelScope.launch {

@@ -75,6 +75,7 @@ class CreateNewTodoActivity : Activity() {
                 // For example, show a toast message indicating success
                 showToast("Todo created successfully")
                 finish() // Close the activity after successfully creating the todo
+
             },
             { exception ->
                 // Handle failure scenario here
