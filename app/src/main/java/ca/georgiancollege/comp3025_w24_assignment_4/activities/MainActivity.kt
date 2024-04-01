@@ -59,12 +59,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-    fun onEditButtonClick(view: View) {
-        // Your implementation to handle the click event goes here
-        // For example, you can start the ToDoItemDetailsActivity here
-        val intent = Intent(this, ToDoItemDetailsActivity::class.java)
-        // Add any necessary extras to the intent
-        startActivity(intent)
-    }
+
 
 }

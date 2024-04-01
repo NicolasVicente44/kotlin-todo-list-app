@@ -1,10 +1,12 @@
 package ca.georgiancollege.comp3025_w24_assignment_4.adapters
 
+
 import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import ca.georgiancollege.comp3025_w24_assignment_4.R
@@ -17,7 +19,9 @@ class RecyclerViewAdapter(
     private val context: Context
 ) : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
-    inner class ViewHolder(val binding: ToDoItemBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(val binding: ToDoItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        val editButton: ImageView = binding.svgImageView
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ToDoItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -35,8 +39,15 @@ class RecyclerViewAdapter(
             val statusColor = if (todo.status) R.color.text_completed else R.color.text_uncompleted
             todoTitle.setTextColor(ContextCompat.getColor(context, statusColor))
 
-            // Set click listener
-            root.setOnClickListener {
+            // Set click listener for edit button
+            holder.editButton.setOnClickListener {
+                // Handle edit button click here
+                // For now, let's just log a message
+                Log.d("RecyclerViewAdapter", "Edit button clicked for todo at position $position")
+            }
+
+            // Set click listener for item view
+            svgImageView.setOnClickListener {
                 // Navigate to ToDoItemDetailsActivity and pass todo item details
                 val intent = Intent(context, ToDoItemDetailsActivity::class.java).apply {
                     putExtra("TODO_TITLE", todo.title)
@@ -45,14 +56,11 @@ class RecyclerViewAdapter(
                     putExtra("TODO_STATUS", todo.status)
                     putExtra("HAS_DUE_DATE", todo.hasDueDate)
                     putExtra("PAST_DUE", todo.pastDue)
-
-
                 }
                 context.startActivity(intent)
             }
         }
         Log.d("TODO", "Todo at position $position: $todo")
-
     }
 
     fun updateTodoList(newTodos: List<TodoItem>) {
@@ -64,3 +72,4 @@ class RecyclerViewAdapter(
         return dataSet.size
     }
 }
+
