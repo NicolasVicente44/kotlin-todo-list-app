@@ -41,12 +41,16 @@ class ToDoItemDetailsActivity : Activity() {
         val description = intent.getStringExtra("TODO_DESCRIPTION")
         val dueDate = intent.getStringExtra("TODO_DUE_DATE")
         val status = intent.getBooleanExtra("TODO_STATUS", false)
+        val hasDueDate = intent.getBooleanExtra("HAS_DUE_DATE", false)
+        val pastDue = intent.getBooleanExtra("PAST_DUE", false)
+
 
         // Update EditText fields with todo item details
         binding.todoTitleDetails.setText(title)
         binding.todoDetailsDescription.setText(description)
         binding.todoDueDate.setText(dueDate)
         binding.detailStatusSwitch.isChecked = status
+
 
         // Set text color based on due date
         updateDueDateTextColor(binding.todoDueDate, dueDate)

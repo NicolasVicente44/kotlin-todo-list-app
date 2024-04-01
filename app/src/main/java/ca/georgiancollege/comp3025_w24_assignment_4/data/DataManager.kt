@@ -2,57 +2,61 @@ package ca.georgiancollege.comp3025_w24_assignment_4.data
 
 import android.util.Log
 import ca.georgiancollege.comp3025_w24_assignment_4.models.TodoItem
-import com.google.firebase.firestore.FirebaseFirestore
-import java.lang.Exception
+import com.google.firebase.database.*
 
 class DataManager {
-    private val db = FirebaseFirestore.getInstance()
-    private val todoCollection = db.collection("todos")
+    private val database = FirebaseDatabase.getInstance()
+    private val todoReference = database.getReference("todos")
 
     fun createTodoItem(todoItem: TodoItem, onSuccess: (String) -> Unit, onFailure: (Exception) -> Unit) {
-        todoCollection.add(todoItem)
-            .addOnSuccessListener { documentReference ->
-                onSuccess(documentReference.id)
-                Log.d("MY LOG", "todos retrieved: ${todoItem}")
-            }
-            .addOnFailureListener { exception ->
-                onFailure(exception)
-            }
+        val key = todoReference.push().key
+        key?.let { todoKey ->
+            todoReference.child(todoKey).setValue(todoItem)
+                .addOnSuccessListener {
+                    onSuccess(todoKey)
+                    Log.d("MY LOG", "Todo item created: $todoItem")
+                }
+                .addOnFailureListener { exception ->
+                    onFailure(exception)
+                }
+        }
     }
 
-
-    fun getAllTodoItems(onSuccess: (List<TodoItem>) -> Unit, onFailure: (Exception) -> Unit) {
-        todoCollection.get()
-            .addOnSuccessListener { querySnapshot ->
-                val todoItems = mutableListOf<TodoItem>()
-                for (document in querySnapshot.documents) {
-                    val todoItem = document.toObject(TodoItem::class.java)
+    fun getAllTodoItems(onComplete: (List<TodoItem>) -> Unit) {
+        todoReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val todos = mutableListOf<TodoItem>()
+                for (snapshot in dataSnapshot.children) {
+                    val todoItem = snapshot.getValue(TodoItem::class.java)
                     todoItem?.let {
-                        todoItems.add(it)
+                        todos.add(it)
                     }
                 }
-                onSuccess(todoItems)
+                onComplete(todos)
             }
-            .addOnFailureListener { exception ->
-                onFailure(exception)
-            }
-    }
 
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("DataManager", "Error fetching todos: ${databaseError.message}")
+                onComplete(emptyList())
+            }
+        })
+    }
 
     fun getTodoItemById(documentId: String, onSuccess: (TodoItem?) -> Unit, onFailure: (Exception) -> Unit) {
-        todoCollection.document(documentId).get()
-            .addOnSuccessListener { documentSnapshot ->
-                val todoItem = documentSnapshot.toObject(TodoItem::class.java)
+        todoReference.child(documentId).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val todoItem = dataSnapshot.getValue(TodoItem::class.java)
                 onSuccess(todoItem)
             }
-            .addOnFailureListener { exception ->
-                onFailure(exception)
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                onFailure(databaseError.toException())
             }
+        })
     }
 
-
     fun updateTodoItem(todoItem: TodoItem, documentId: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
-        todoCollection.document(documentId).set(todoItem)
+        todoReference.child(documentId).setValue(todoItem)
             .addOnSuccessListener {
                 onSuccess()
             }
@@ -62,7 +66,7 @@ class DataManager {
     }
 
     fun deleteTodoItem(documentId: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
-        todoCollection.document(documentId).delete()
+        todoReference.child(documentId).removeValue()
             .addOnSuccessListener {
                 onSuccess()
             }
@@ -71,4 +75,17 @@ class DataManager {
             }
     }
 
+    fun updateTodoStatus(todoId: String, newStatus: Boolean, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        val updatedData = hashMapOf(
+            "status" to newStatus
+        )
+
+        todoReference.child(todoId).updateChildren(updatedData as Map<String, Any>)
+            .addOnSuccessListener {
+                onSuccess()
+            }
+            .addOnFailureListener { e ->
+                onFailure(e)
+            }
+    }
 }

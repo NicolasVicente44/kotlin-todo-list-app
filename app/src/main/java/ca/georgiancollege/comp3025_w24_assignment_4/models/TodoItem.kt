@@ -12,8 +12,10 @@ data class TodoItem(
     val hasDueDate: Boolean = false,
     val dueDate: String = getCurrentDate(),
     val pastDue: Boolean = false,
-    var status: Boolean = false
+    var status: Boolean = false,
 ) {
+
+
     companion object {
 
         //function to get current date and set the default due date equal to the current date

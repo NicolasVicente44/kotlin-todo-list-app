@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "597515693667",
-    "project_id": "assignment4-b1769",
-    "storage_bucket": "assignment4-b1769.appspot.com"
+    "project_number": "650500371919",
+    "project_id": "assignment4-548b9",
+    "storage_bucket": "assignment4-548b9.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:597515693667:android:0522731f7c5962b86a1256",
+        "mobilesdk_app_id": "1:650500371919:android:f9b4410956d7cbe3a84eba",
         "android_client_info": {
           "package_name": "ca.georgiancollege.comp3025_w24_assignment_4"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCaguP9OkSN4gA_mRtZ1IZOZAz4o8Y9UwQ"
+          "current_key": "AIzaSyAdGO4mbscdU1TROkiHrJnkdHFcavEfOMY"
         }
       ],
       "services": {

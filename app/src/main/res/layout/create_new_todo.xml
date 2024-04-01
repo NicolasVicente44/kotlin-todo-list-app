@@ -56,6 +56,7 @@
             android:textSize="20sp" />
 
         <Button
+            android:id="@+id/createButton"
             android:layout_width="400px"
             android:layout_height="wrap_content"
             android:background="@drawable/update_button"
@@ -120,7 +121,7 @@
             android:gravity="center_vertical">
 
             <EditText
-                android:id="@+id/todoTitleDetails"
+                android:id="@+id/todoCreateTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -170,7 +171,7 @@
             android:gravity="center_vertical">
 
             <EditText
-                android:id="@+id/todoDetailsDescription"
+                android:id="@+id/todoCreateDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="                                                             "
@@ -217,7 +218,7 @@
             android:gravity="center_vertical">
 
             <EditText
-                android:id="@+id/todoDueDate"
+                android:id="@+id/todoCreateDueDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="                                                             "
@@ -262,12 +263,12 @@
             android:layout_weight="1.5"
             android:gravity="center_vertical"
             android:orientation="vertical">
-
             <Switch
-                android:id="@+id/detailStatusSwitch"
+                android:id="@+id/todoCreateStatusSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />
+
         </LinearLayout>
     </LinearLayout>
 
@@ -309,7 +310,7 @@
             android:orientation="vertical">
 
             <Switch
-                android:id="@+id/calendarStatusSwitch"
+                android:id="@+id/todoCreateCalendarSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />

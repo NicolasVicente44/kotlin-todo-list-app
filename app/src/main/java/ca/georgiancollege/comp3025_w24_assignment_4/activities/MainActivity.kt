@@ -1,82 +1,70 @@
 package ca.georgiancollege.comp3025_w24_assignment_4.activities
-
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import ca.georgiancollege.comp3025_w24_assignment_4.adapters.RecyclerViewAdapter
 import ca.georgiancollege.comp3025_w24_assignment_4.databinding.ActivityMainBinding
 import ca.georgiancollege.comp3025_w24_assignment_4.models.TodoItem
 import ca.georgiancollege.comp3025_w24_assignment_4.viewmodels.TodoItemViewModel
-import android.util.Log
-import android.view.View
-import com.google.firebase.Firebase
-import com.google.firebase.firestore.firestore
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var todoItemViewModel: TodoItemViewModel
     private lateinit var adapter: RecyclerViewAdapter
-    val db = Firebase.firestore
+    private lateinit var todoItemViewModel: TodoItemViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //change the android button ui
+
+        // Set the navigation bar icons color to gray
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
         }
+
+        // Set up RecyclerView
+        binding.FirstRecyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = RecyclerViewAdapter(emptyList(), this)
+        binding.FirstRecyclerView.adapter = adapter
+
         // Initialize ViewModel
         todoItemViewModel = ViewModelProvider(this).get(TodoItemViewModel::class.java)
 
-        // Set up RecyclerView
-        val recyclerView = binding.FirstRecyclerView
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = RecyclerViewAdapter(emptyList(), this)
-        recyclerView.adapter = adapter
+        // Call getAllTodoItems() to fetch todo items
+        todoItemViewModel.getAllTodoItems()
 
-        // Observe LiveData for todo items and ouput them to the recycler veiw
-        todoItemViewModel.getAllTodoItems(
-            onSuccess = { todoList ->
-                adapter.todos = todoList
-                adapter.notifyDataSetChanged()
-                Log.d("MainActivity", "Todo items retrieved: $todoList")
-            },
-            onFailure = { exception ->
-                Log.e("MainActivity", "Failed to retrieve todo items", exception)
-            }
-        )
-        //get todos and output them to logcat
-        db.collection("todos")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    Log.d("todo", "todos: ${document.id} => ${document.data}")
+        // Observe the todo list from the ViewModel
+        todoItemViewModel.allTodoItems.observe(this, Observer { todos ->
+            todos?.let {
+                adapter.updateTodoList(it)
+                Log.d("TODO", "Total Todos: ${todos.size}")
+                for ((index, todo) in todos.withIndex()) {
+                    Log.d("TODO", "Todo $index: $todo")
                 }
             }
-            .addOnFailureListener { exception ->
-                Log.w("todo error", "Error getting documents.", exception)
-            }
+        })
 
-
-
-
-
-
-
-
-        // Set up FloatingActionButton OnClickListener
-        val fab = binding.addMovieFAB
-        fab.setOnClickListener {
+        // Set up FloatingActionButton OnClickListener for the create page to create a new todo
+        binding.addMovieFAB.setOnClickListener {
             // Start the CreateNewTodoActivity
             val intent = Intent(this, CreateNewTodoActivity::class.java)
             startActivity(intent)
         }
 
-
     }
+    fun onEditButtonClick(view: View) {
+        // Your implementation to handle the click event goes here
+        // For example, you can start the ToDoItemDetailsActivity here
+        val intent = Intent(this, ToDoItemDetailsActivity::class.java)
+        // Add any necessary extras to the intent
+        startActivity(intent)
+    }
+
 }

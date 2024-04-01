@@ -1,27 +1,21 @@
 package ca.georgiancollege.comp3025_w24_assignment_4.adapters
+
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import ca.georgiancollege.comp3025_w24_assignment_4.databinding.ToDoItemBinding
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-import android.view.View
 import ca.georgiancollege.comp3025_w24_assignment_4.R
 import ca.georgiancollege.comp3025_w24_assignment_4.activities.ToDoItemDetailsActivity
+import ca.georgiancollege.comp3025_w24_assignment_4.databinding.ToDoItemBinding
 import ca.georgiancollege.comp3025_w24_assignment_4.models.TodoItem
 
-
-/**
- * adapter class that bridges tthe data and the UI compoenents, including the recycler view/list
- */
-
-
-class RecyclerViewAdapter(var todos: List<TodoItem>, private val context: Context) :
-    RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
+class RecyclerViewAdapter(
+    private var dataSet: List<TodoItem>,
+    private val context: Context
+) : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: ToDoItemBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -30,79 +24,43 @@ class RecyclerViewAdapter(var todos: List<TodoItem>, private val context: Contex
         return ViewHolder(binding)
     }
 
-
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val todo = todos[position]
+        val todo = dataSet[position]
         holder.binding.apply {
-
             todoTitle.text = todo.title
-            todoDescription.text = truncateDescription(todo.description)
+            todoDescription.text = todo.description
+            todoDueDate.text = todo.dueDate
 
-            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val currentDate = sdf.format(Date())
-            val dueDate = todo.dueDate
+            // Set text color based on status
+            val statusColor = if (todo.status) R.color.text_completed else R.color.text_uncompleted
+            todoTitle.setTextColor(ContextCompat.getColor(context, statusColor))
 
-            // Check if due date is today
-            val today = dueDate.isNotEmpty() && dueDate == currentDate
-
-            // Check if due date is past due
-            val pastDue = if (dueDate.isNotEmpty()) {
-                sdf.parse(dueDate)?.let { it.before(Date()) } ?: false
-            } else {
-                false
-            }
-
-            // Set text color based on due date
-            when {
-                today -> todoDueDate.setTextColor(ContextCompat.getColor(root.context,
-                    R.color.text_due_today
-                ))
-                pastDue -> todoDueDate.setTextColor(ContextCompat.getColor(root.context,
-                    R.color.text_past_due
-                ))
-                else -> todoDueDate.setTextColor(ContextCompat.getColor(root.context,
-                    R.color.text_normal
-                ))
-            }
-
-            todoDueDate.text = dueDate
-            todoMainStatusSwitch.isChecked = todo.status
-
-            // Check if the click was on the edit image view
-            svgImageView.setOnClickListener {
+            // Set click listener
+            root.setOnClickListener {
                 // Navigate to ToDoItemDetailsActivity and pass todo item details
-                val intent = Intent(context, ToDoItemDetailsActivity::class.java)
-                intent.putExtra("TODO_TITLE", todo.title)
-                intent.putExtra("TODO_DESCRIPTION", todo.description)
-                intent.putExtra("TODO_DUE_DATE", todo.dueDate)
-                intent.putExtra("TODO_STATUS", todo.status)
+                val intent = Intent(context, ToDoItemDetailsActivity::class.java).apply {
+                    putExtra("TODO_TITLE", todo.title)
+                    putExtra("TODO_DESCRIPTION", todo.description)
+                    putExtra("TODO_DUE_DATE", todo.dueDate)
+                    putExtra("TODO_STATUS", todo.status)
+                    putExtra("HAS_DUE_DATE", todo.hasDueDate)
+                    putExtra("PAST_DUE", todo.pastDue)
+
+
+                }
                 context.startActivity(intent)
             }
-
-            todoMainStatusSwitch.setOnCheckedChangeListener { _, isChecked ->
-                todo.status = isChecked
-                setOpacityBasedOnSwitchStatus(root, isChecked)
-            }
         }
+        Log.d("TODO", "Todo at position $position: $todo")
+
     }
 
-    private fun truncateDescription(description: String): String {
-        val maxLength = 25
-        return if(description.length > maxLength) {
-            "${description.substring(0, maxLength)}..."
-        } else {
-            description
-        }
-    }
-
-
-    private fun setOpacityBasedOnSwitchStatus(view: View, isChecked: Boolean) {
-        view.alpha = if (isChecked) 0.5f else 1.0f
+    fun updateTodoList(newTodos: List<TodoItem>) {
+        dataSet = newTodos
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
-        return todos.size
+        return dataSet.size
     }
 }
-
