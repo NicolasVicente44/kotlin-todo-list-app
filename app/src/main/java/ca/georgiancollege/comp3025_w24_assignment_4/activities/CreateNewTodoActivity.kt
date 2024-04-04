@@ -30,7 +30,8 @@ class CreateNewTodoActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         // Set the navigation bar icons color to gray
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+            window.decorView.systemUiVisibility =
+                window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
         }
 
         super.onCreate(savedInstanceState)
@@ -45,10 +46,15 @@ class CreateNewTodoActivity : Activity() {
         binding.createButton.setOnClickListener {
             createTodo()
         }
+        binding.createActivtiyCancelButton.setOnClickListener {
+            cancelTodoCreation()
+        }
+
 
         // Set up the calendar view
         binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
-            val selectedDate = String.format(Locale.getDefault(), "%04d-%02d-%02d", year, month + 1, dayOfMonth)
+            val selectedDate =
+                String.format(Locale.getDefault(), "%04d-%02d-%02d", year, month + 1, dayOfMonth)
             binding.todoCreateDueDate.setText(selectedDate)
             updateDueDateTextColor(binding.todoCreateDueDate, selectedDate)
         }
@@ -60,7 +66,12 @@ class CreateNewTodoActivity : Activity() {
                 // Set default date value to today's date when the switch is checked
                 val defaultDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
                 binding.todoCreateDueDate.setText(defaultDate)
-                binding.todoCreateDueDate.setTextColor(ContextCompat.getColor(this, R.color.text_due_today)) // Set color to yellow
+                binding.todoCreateDueDate.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.text_due_today
+                    )
+                ) // Set color to yellow
             } else {
                 // Reset the due date text if calendar is disabled
                 binding.todoCreateDueDate.setText("")
@@ -78,17 +89,30 @@ class CreateNewTodoActivity : Activity() {
         val dueDate = if (hasDueDate) {
             binding.todoCreateDueDate.text.toString()
         } else {
-            "" // If hasDueDate is false, set an empty string as the due date
+            ""
         }
 
         // Validate due date format if it is not empty
-        if (dueDate.isNotEmpty() && !validateDateFormat(dueDate)) {
+        if (hasDueDate && dueDate.isNotEmpty() && !validateDateFormat(dueDate)) {
             showToast("Please enter due date in the format yyyy-MM-dd or use the calendar.")
             return
         }
 
+        // Check if any of the required fields are empty
+        if (title.isEmpty() || description.isEmpty()) {
+            showToast("Please fill in all fields.")
+            return
+        }
+
+
         // Create a TodoItem object
-        val todoItem = TodoItem(title = title, description = description, dueDate = dueDate, status = status, hasDueDate = hasDueDate)
+        val todoItem = TodoItem(
+            title = title,
+            description = description,
+            dueDate = dueDate,
+            status = status,
+            hasDueDate = hasDueDate
+        )
 
         // Instantiate the TodoItemViewModel with the DataManager instance
         val todoItemViewModel = TodoItemViewModel(DataManager())
@@ -109,6 +133,26 @@ class CreateNewTodoActivity : Activity() {
                 showToast("Failed to create todo: ${exception.message}")
             }
         )
+    }
+
+
+    private fun cancelTodoCreation() {
+        // Reset title and description fields
+        binding.todoCreateTitle.text.clear()
+        binding.todoCreateDescription.text.clear()
+
+        // Reset status switch to unchecked
+        binding.todoCreateStatusSwitch.isChecked = false
+
+        // Reset calendar switch to unchecked and disable calendar view
+        binding.todoCreateCalendarSwitch.isChecked = false
+        binding.calendarView.isEnabled = false
+
+        // Clear due date text
+        binding.todoCreateDueDate.setText("")
+
+        // Show a toast message indicating cancellation
+        showToast("Todo creation canceled")
     }
 
 

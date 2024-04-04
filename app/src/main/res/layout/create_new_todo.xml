@@ -46,6 +46,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
+            android:id="@+id/createActivtiyCancelButton"
             android:layout_width="400px"
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
