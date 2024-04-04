@@ -16,6 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import ca.georgiancollege.comp3025_w24_assignment_4.R
+import ca.georgiancollege.comp3025_w24_assignment_4.data.DataManager
 import ca.georgiancollege.comp3025_w24_assignment_4.databinding.CreateNewTodoBinding
 import ca.georgiancollege.comp3025_w24_assignment_4.models.TodoItem
 import ca.georgiancollege.comp3025_w24_assignment_4.viewmodels.TodoItemViewModel
@@ -36,37 +37,61 @@ class CreateNewTodoActivity : Activity() {
         binding = CreateNewTodoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Set initial state of calendar based on hasDueDate switch
+        binding.todoCreateCalendarSwitch.isChecked = false
+        binding.calendarView.isEnabled = false
+
+        // Attach click listener to the create button
+        binding.createButton.setOnClickListener {
+            createTodo()
+        }
+
+        // Set up the calendar view
         binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             val selectedDate = String.format(Locale.getDefault(), "%04d-%02d-%02d", year, month + 1, dayOfMonth)
             binding.todoCreateDueDate.setText(selectedDate)
             updateDueDateTextColor(binding.todoCreateDueDate, selectedDate)
         }
 
-
-        // Attach click listener to the create button
-        binding.createButton.setOnClickListener {
-            createTodo()
+        // Set initial state of calendar based on hasDueDate switch
+        binding.todoCreateCalendarSwitch.setOnCheckedChangeListener { _, isChecked ->
+            binding.calendarView.isEnabled = isChecked
+            if (isChecked) {
+                // Set default date value to today's date when the switch is checked
+                val defaultDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+                binding.todoCreateDueDate.setText(defaultDate)
+                binding.todoCreateDueDate.setTextColor(ContextCompat.getColor(this, R.color.text_due_today)) // Set color to yellow
+            } else {
+                // Reset the due date text if calendar is disabled
+                binding.todoCreateDueDate.setText("")
+            }
         }
     }
-
-
-
-
-
 
     private fun createTodo() {
         // Retrieve user-entered data
         val title = binding.todoCreateTitle.text.toString()
         val description = binding.todoCreateDescription.text.toString()
-        val dueDate = binding.todoCreateDueDate.text.toString()
         val status = binding.todoCreateStatusSwitch.isChecked
         val hasDueDate = binding.todoCreateCalendarSwitch.isChecked
+
+        val dueDate = if (hasDueDate) {
+            binding.todoCreateDueDate.text.toString()
+        } else {
+            "" // If hasDueDate is false, set an empty string as the due date
+        }
+
+        // Validate due date format if it is not empty
+        if (dueDate.isNotEmpty() && !validateDateFormat(dueDate)) {
+            showToast("Please enter due date in the format yyyy-MM-dd or use the calendar.")
+            return
+        }
 
         // Create a TodoItem object
         val todoItem = TodoItem(title = title, description = description, dueDate = dueDate, status = status, hasDueDate = hasDueDate)
 
-        // Instantiate the TodoItemViewModel
-        val todoItemViewModel = TodoItemViewModel()
+        // Instantiate the TodoItemViewModel with the DataManager instance
+        val todoItemViewModel = TodoItemViewModel(DataManager())
 
         // Call the addTodoItem method to save the todo item to Firebase
         todoItemViewModel.addTodoItem(
@@ -87,13 +112,16 @@ class CreateNewTodoActivity : Activity() {
     }
 
 
+    private fun validateDateFormat(date: String): Boolean {
+        val regex = """^\d{4}-\d{2}-\d{2}$""".toRegex()
+        return regex.matches(date)
+    }
+
     private fun showToast(message: String) {
         val toast = Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT)
         toast.setGravity(Gravity.TOP, 0, 100) // Adjust the Y offset as needed
         toast.show()
     }
-
-
 
     private fun updateDueDateTextColor(todoDueDate: TextView, date: String?) {
         if (date != null && date.isNotEmpty()) {
@@ -120,5 +148,4 @@ class CreateNewTodoActivity : Activity() {
         }
     }
 }
-
 

@@ -7,11 +7,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 data class TodoItem(
+    var id: String? = null,
     val title: String = "",
     val description: String = "",
     val hasDueDate: Boolean = false,
     val dueDate: String = getCurrentDate(),
-    val pastDue: Boolean = false,
+    val pastDue: Boolean = dueDate < getCurrentDate(),
     var status: Boolean = false,
 ) {
 

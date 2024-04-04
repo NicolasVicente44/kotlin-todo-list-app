@@ -7,10 +7,15 @@ import com.google.firebase.database.*
 class DataManager {
     private val database = FirebaseDatabase.getInstance()
     private val todoReference = database.getReference("todos")
-
-    fun createTodoItem(todoItem: TodoItem, onSuccess: (String) -> Unit, onFailure: (Exception) -> Unit) {
+    fun createTodoItem(
+        todoItem: TodoItem,
+        onSuccess: (String) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
         val key = todoReference.push().key
         key?.let { todoKey ->
+            // Set the ID of the todoItem to the auto-generated key
+            todoItem.id = todoKey
             todoReference.child(todoKey).setValue(todoItem)
                 .addOnSuccessListener {
                     onSuccess(todoKey)
@@ -21,6 +26,7 @@ class DataManager {
                 }
         }
     }
+
 
     fun getAllTodoItems(onComplete: (List<TodoItem>) -> Unit) {
         todoReference.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -54,6 +60,7 @@ class DataManager {
             }
         })
     }
+
 
     fun updateTodoItem(todoItem: TodoItem, documentId: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
         todoReference.child(documentId).setValue(todoItem)

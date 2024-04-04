@@ -26,16 +26,17 @@ class MainActivity : AppCompatActivity() {
 
         // Set the navigation bar icons color to gray
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+            window.decorView.systemUiVisibility =
+                window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
         }
-
-        // Set up RecyclerView
-        binding.FirstRecyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = RecyclerViewAdapter(emptyList(), this)
-        binding.FirstRecyclerView.adapter = adapter
 
         // Initialize ViewModel
         todoItemViewModel = ViewModelProvider(this).get(TodoItemViewModel::class.java)
+
+        // Set up RecyclerView
+        binding.FirstRecyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = RecyclerViewAdapter(emptyList(), this, todoItemViewModel)
+        binding.FirstRecyclerView.adapter = adapter
 
         // Call getAllTodoItems() to fetch todo items
         todoItemViewModel.getAllTodoItems()
@@ -57,8 +58,5 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, CreateNewTodoActivity::class.java)
             startActivity(intent)
         }
-
     }
-
-
 }
