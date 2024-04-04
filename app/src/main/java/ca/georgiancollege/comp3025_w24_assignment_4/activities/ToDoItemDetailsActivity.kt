@@ -1,5 +1,7 @@
 package ca.georgiancollege.comp3025_w24_assignment_4.activities
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
@@ -8,6 +10,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewAnimationUtils
 import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
@@ -31,6 +34,7 @@ class ToDoItemDetailsActivity : Activity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
         }
+
         // Initialize TodoItemViewModel
         todoItemViewModel = TodoItemViewModel()
 
@@ -46,8 +50,15 @@ class ToDoItemDetailsActivity : Activity() {
         // Update EditText fields with todo item details
         binding.todoTitleDetails.setText(title)
         binding.todoDetailsDescription.setText(description)
-        binding.todoDueDate.setText(dueDate)
-        binding.detailStatusSwitch.isChecked = status
+        binding.todoDueDate.text = dueDate
+
+        binding.detailStatusSwitch.post {
+            binding.detailStatusSwitch.isChecked = status // Set the switch based on the status
+        }
+
+        binding.calendarStatusSwitch.post {
+            binding.calendarStatusSwitch.isChecked = hasDueDate // Set the switch based on the status
+        }
 
         // Set text color based on due date
         updateDueDateTextColor(binding.todoDueDate, dueDate)
@@ -61,23 +72,71 @@ class ToDoItemDetailsActivity : Activity() {
                     // onSuccess: Action to perform when deletion is successful
                     onSuccess = {
                         // Log success message
-                        Log.d("ToDoItemDetails", "Todo item deleted successfully")
                         showToast("Todo deleted successfully")
                         val intent = Intent(this@ToDoItemDetailsActivity, MainActivity::class.java)
-                        startActivity(intent)                    },
+                        startActivity(intent)
+                    },
                     // onFailure: Action to perform when deletion fails
                     onFailure = { exception ->
                         // Log error message
-                        Log.e("ToDoItemDetails", "Failed to delete todo item: ${exception.message}")
                         showToast("Todo deletion failed")
                     }
                 )
             } else {
                 // Log an error if todoItemId is null
-                Log.e("ToDoItemDetails", "Todo item ID is null")
+                showToast("Todo item ID is null")
             }
         }
+
+        // Set up the calendar view
+        binding.calendarStatusSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                animatePopUp(binding.calendarView)
+                animatePopUp(binding.linearLayout2)
+            } else {
+                animatePopDown(binding.calendarView)
+                animatePopDown(binding.linearLayout2)
+            }
+        }
+
+        // Initially hide the layout if hasDueDate is false
+        if (!hasDueDate) {
+            binding.calendarView.visibility = View.INVISIBLE
+            binding.linearLayout2.visibility = View.INVISIBLE
+        }
     }
+
+    private fun animatePopUp(view: View) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val cx = view.width / 2
+            val cy = view.height / 2
+            val finalRadius = Math.hypot(cx.toDouble(), cy.toDouble()).toFloat()
+            val anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0f, finalRadius)
+            view.visibility = View.VISIBLE
+            anim.start()
+        } else {
+            view.visibility = View.VISIBLE
+        }
+    }
+
+    private fun animatePopDown(view: View) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val cx = view.width / 2
+            val cy = view.height / 2
+            val initialRadius = Math.hypot(cx.toDouble(), cy.toDouble()).toFloat()
+            val anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, initialRadius, 0f)
+            anim.addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    super.onAnimationEnd(animation)
+                    view.visibility = View.INVISIBLE
+                }
+            })
+            anim.start()
+        } else {
+            view.visibility = View.INVISIBLE
+        }
+    }
+
 
     private fun showToast(message: String) {
         val toast = Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT)

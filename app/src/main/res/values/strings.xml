@@ -20,7 +20,7 @@
     <string name="todoDetailsStatus">To Do Completed:</string>
     <string name="todoCreateTitle">+ New To Do</string>
 
-    <string name="calendarStatusLabel">Calendar Enabled:</string>
+    <string name="calendarStatusLabel">Has Due Date:</string>
 
 
 
