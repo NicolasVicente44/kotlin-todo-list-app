@@ -58,10 +58,14 @@ class CreateNewTodoActivity : Activity() {
                 animatePopUp(binding.calendarView)
                 animatePopUp(binding.linearLayout2)
 
+                // Set the current date to the due date TextView
+                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val currentDate = sdf.format(Date())
+                binding.todoCreateDueDate.text = currentDate
+                updateDueDateTextColor(binding.todoCreateDueDate, currentDate)
             } else {
                 animatePopDown(binding.calendarView)
                 animatePopDown(binding.linearLayout2)
-
             }
         }
 

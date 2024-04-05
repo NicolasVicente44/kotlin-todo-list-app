@@ -41,6 +41,9 @@ class MainActivity : AppCompatActivity() {
         // Call getAllTodoItems() to fetch todo items
         todoItemViewModel.getAllTodoItems()
 
+
+
+
         // Observe the todo list from the ViewModel
         todoItemViewModel.allTodoItems.observe(this, Observer { todos ->
             todos?.let {
@@ -49,8 +52,12 @@ class MainActivity : AppCompatActivity() {
                 for ((index, todo) in todos.withIndex()) {
                     Log.d("TODO", "Todo $index: $todo")
                 }
+
+
             }
         })
+
+
 
         // Set up FloatingActionButton OnClickListener for the create page to create a new todo
         binding.addMovieFAB.setOnClickListener {

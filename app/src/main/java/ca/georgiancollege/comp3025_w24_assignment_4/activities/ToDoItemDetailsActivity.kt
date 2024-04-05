@@ -43,7 +43,7 @@ class ToDoItemDetailsActivity : Activity() {
         val description = intent.getStringExtra("TODO_DESCRIPTION")
         val dueDate = intent.getStringExtra("TODO_DUE_DATE")
         val status = intent.getBooleanExtra("TODO_STATUS", false)
-        val hasDueDate = intent.getBooleanExtra("HAS_DUE_DATE", false)
+        var hasDueDate = intent.getBooleanExtra("HAS_DUE_DATE", false)
         val pastDue = intent.getBooleanExtra("PAST_DUE", false)
         todoItemId = intent.getStringExtra("TODO_ID") // Retrieve the todo item ID
 
@@ -51,6 +51,8 @@ class ToDoItemDetailsActivity : Activity() {
         binding.todoTitleDetails.setText(title)
         binding.todoDetailsDescription.setText(description)
         binding.todoDueDate.text = dueDate
+
+
 
         binding.detailStatusSwitch.post {
             binding.detailStatusSwitch.isChecked = status // Set the switch based on the status
@@ -93,6 +95,27 @@ class ToDoItemDetailsActivity : Activity() {
             if (isChecked) {
                 animatePopUp(binding.calendarView)
                 animatePopUp(binding.linearLayout2)
+                hasDueDate = true
+
+                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val currentDate = sdf.format(Date())
+
+                binding.todoDueDate.text = currentDate
+
+                updateDueDateTextColor(binding.todoDueDate, currentDate)
+
+                // Set up listener for the calendar view
+                binding.calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
+                    // Format the selected date
+                    val selectedDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                        .format(Date(year - 1900, month, dayOfMonth))
+
+                    // Update the due date TextView
+                    binding.todoDueDate.text = selectedDate
+
+                    // Update the text color of the due date TextView based on the selected date
+                    updateDueDateTextColor(binding.todoDueDate, selectedDate)
+                }
             } else {
                 animatePopDown(binding.calendarView)
                 animatePopDown(binding.linearLayout2)
@@ -105,6 +128,7 @@ class ToDoItemDetailsActivity : Activity() {
             binding.linearLayout2.visibility = View.INVISIBLE
         }
     }
+
 
     private fun animatePopUp(view: View) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

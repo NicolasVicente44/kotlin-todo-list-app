@@ -46,6 +46,8 @@ class RecyclerViewAdapter(
                 // Retrieve the auto-generated ID of the todo item
                 val todoId = todo.id ?: ""
 
+
+
                 // Call getTodoItemById to fetch the details of the todo item using its ID
                 todoItemViewModel.getTodoItemById(todoId,
                     onSuccess = { todoItem ->
