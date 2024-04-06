@@ -21,6 +21,8 @@ import ca.georgiancollege.comp3025_w24_assignment_4.viewmodels.TodoItemViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import android.app.AlertDialog
+
 
 class ToDoItemDetailsActivity : Activity() {
     private lateinit var todoItemViewModel: TodoItemViewModel
@@ -65,30 +67,10 @@ class ToDoItemDetailsActivity : Activity() {
         // Set text color based on due date
         updateDueDateTextColor(binding.todoDueDate, dueDate)
 
-        // Set OnClickListener for delete button
         binding.deleteButton.setOnClickListener {
-            if (todoItemId != null) {
-                // Call deleteTodoItem() method from TodoItemViewModel with the todo item ID
-                todoItemViewModel.deleteTodoItem(
-                    todoItemId!!,
-                    // onSuccess: Action to perform when deletion is successful
-                    onSuccess = {
-                        // Log success message
-                        showToast("Todo deleted successfully")
-                        val intent = Intent(this@ToDoItemDetailsActivity, MainActivity::class.java)
-                        startActivity(intent)
-                    },
-                    // onFailure: Action to perform when deletion fails
-                    onFailure = { exception ->
-                        // Log error message
-                        showToast("Todo deletion failed")
-                    }
-                )
-            } else {
-                // Log an error if todoItemId is null
-                showToast("Todo item ID is null")
-            }
+            showDeleteConfirmationDialog()
         }
+
 
         // Set up the calendar view
         binding.calendarStatusSwitch.setOnCheckedChangeListener { _, isChecked ->
@@ -129,6 +111,47 @@ class ToDoItemDetailsActivity : Activity() {
         }
     }
 
+    // Function to show the delete confirmation dialog
+    private fun showDeleteConfirmationDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Delete Todo Item")
+        builder.setMessage("Are you sure you want to delete this todo item?")
+        builder.setPositiveButton("Yes") { _, _ ->
+            // User clicked Yes button, proceed with deletion
+            deleteTodoItem()
+        }
+        builder.setNegativeButton("No") { dialog, _ ->
+            // User clicked No button, dismiss the dialog
+            dialog.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    // Function to delete the todo item
+    private fun deleteTodoItem() {
+        if (todoItemId != null) {
+            // Call deleteTodoItem() method from TodoItemViewModel with the todo item ID
+            todoItemViewModel.deleteTodoItem(
+                todoItemId!!,
+                // onSuccess: Action to perform when deletion is successful
+                onSuccess = {
+                    // Log success message
+                    showToast("Todo deleted successfully")
+                    val intent = Intent(this@ToDoItemDetailsActivity, MainActivity::class.java)
+                    startActivity(intent)
+                },
+                // onFailure: Action to perform when deletion fails
+                onFailure = { exception ->
+                    // Log error message
+                    showToast("Todo deletion failed")
+                }
+            )
+        } else {
+            // Log an error if todoItemId is null
+            showToast("Todo item ID is null")
+        }
+    }
 
     private fun animatePopUp(view: View) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
