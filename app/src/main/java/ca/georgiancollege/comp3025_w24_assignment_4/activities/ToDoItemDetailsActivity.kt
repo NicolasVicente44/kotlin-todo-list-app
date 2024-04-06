@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import android.app.AlertDialog
+import ca.georgiancollege.comp3025_w24_assignment_4.models.TodoItem
 
 
 class ToDoItemDetailsActivity : Activity() {
@@ -34,7 +35,8 @@ class ToDoItemDetailsActivity : Activity() {
         binding = ToDoItemDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+            window.decorView.systemUiVisibility =
+                window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
         }
 
         // Initialize TodoItemViewModel
@@ -48,6 +50,20 @@ class ToDoItemDetailsActivity : Activity() {
         var hasDueDate = intent.getBooleanExtra("HAS_DUE_DATE", false)
         val pastDue = intent.getBooleanExtra("PAST_DUE", false)
         todoItemId = intent.getStringExtra("TODO_ID") // Retrieve the todo item ID
+        val documentId = intent.getStringExtra("DOCUMENT_ID") // Retrieve the document ID
+
+        // Create a new TodoItem object
+        val todoItem = TodoItem(
+            id = documentId ?: "", // Use an empty string if todoId is null
+            title = title ?: "", // Use an empty string if title is null
+            description = description ?: "", // Use an empty string if description is null
+            dueDate = dueDate ?: "", // Use an empty string if dueDate is null
+            status = status, // Use the provided status value
+            hasDueDate = hasDueDate, // Use the provided hasDueDate value
+            pastDue = pastDue // Use the provided pastDue value
+        )
+
+
 
         // Update EditText fields with todo item details
         binding.todoTitleDetails.setText(title)
@@ -61,7 +77,8 @@ class ToDoItemDetailsActivity : Activity() {
         }
 
         binding.calendarStatusSwitch.post {
-            binding.calendarStatusSwitch.isChecked = hasDueDate // Set the switch based on the status
+            binding.calendarStatusSwitch.isChecked =
+                hasDueDate // Set the switch based on the status
         }
 
         // Set text color based on due date
@@ -70,6 +87,9 @@ class ToDoItemDetailsActivity : Activity() {
         binding.deleteButton.setOnClickListener {
             showDeleteConfirmationDialog()
         }
+
+
+
 
 
         // Set up the calendar view
@@ -110,6 +130,42 @@ class ToDoItemDetailsActivity : Activity() {
             binding.linearLayout2.visibility = View.INVISIBLE
         }
     }
+
+
+    private fun showUpdateConfirmationDialog(todoItem: TodoItem, documentId: String) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Update Todo Item")
+        builder.setMessage("Are you sure you want to update this todo item?")
+        builder.setPositiveButton("Yes") { _, _ ->
+            // User clicked Yes button, proceed with update
+            updateTodoItem(todoItem, documentId)
+        }
+        builder.setNegativeButton("No") { dialog, _ ->
+            // User clicked No button, dismiss the dialog
+            dialog.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+
+    private fun updateTodoItem(todoItem: TodoItem, documentId: String) {
+        todoItemViewModel.updateTodoItem(
+            todoItem,
+            documentId,
+            onSuccess = {
+                // Log success message
+                showToast("Todo updated successfully")
+                // Finish the activity to go back to the previous screen
+                finish()
+            },
+            onFailure = { exception ->
+                // Log error message
+                showToast("Todo update failed")
+            }
+        )
+    }
+
 
     // Function to show the delete confirmation dialog
     private fun showDeleteConfirmationDialog() {
@@ -190,6 +246,7 @@ class ToDoItemDetailsActivity : Activity() {
         toast.setGravity(Gravity.TOP, 0, 100) // Adjust the Y offset as needed
         toast.show()
     }
+
     private fun updateDueDateTextColor(todoDueDate: TextView, date: String?) {
         if (date != null && date.isNotEmpty()) {
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -220,7 +277,10 @@ class ToDoItemDetailsActivity : Activity() {
         if (item.itemId == android.R.id.home) {
             // Pass the current state of the switch back to the calling activity
             val intent = Intent()
-            intent.putExtra("UPDATED_TODO_STATUS", (findViewById<Switch>(R.id.detailStatusSwitch)).isChecked)
+            intent.putExtra(
+                "UPDATED_TODO_STATUS",
+                (findViewById<Switch>(R.id.detailStatusSwitch)).isChecked
+            )
             setResult(RESULT_OK, intent)
             finish() // Finish the activity
             return true
