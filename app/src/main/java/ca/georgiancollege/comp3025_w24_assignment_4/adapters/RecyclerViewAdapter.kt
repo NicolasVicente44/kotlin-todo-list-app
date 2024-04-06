@@ -40,32 +40,86 @@ class RecyclerViewAdapter(
             // Set switch state based on the status of the TodoItem
             todoMainStatusSwitch.isChecked = todo.status
 
+            // Update the strike-through effect and text color based on initial status
+            if (todo.status) {
+                todoTitle.setTextColor(
+                    ContextCompat.getColor(context, R.color.text_completed)
+                )
+                todoDescription.setTextColor(
+                    ContextCompat.getColor(context, R.color.text_completed)
+                )
+                todoTitle.paintFlags =
+                    todoTitle.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                todoDescription.paintFlags =
+                    todoDescription.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            } else {
+                todoTitle.setTextColor(
+                    ContextCompat.getColor(context, R.color.text_uncompleted)
+                )
+                todoDescription.setTextColor(
+                    ContextCompat.getColor(context, R.color.text_uncompleted)
+                )
+                todoTitle.paintFlags =
+                    todoTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                todoDescription.paintFlags =
+                    todoDescription.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            }
+
             // Set click listener for the completion status indicator (e.g., a CheckBox or a Switch)
             todoMainStatusSwitch.setOnCheckedChangeListener { _, isChecked ->
                 // Update the completion status of the corresponding TodoItem
                 todo.id?.let {
-                    todoItemViewModel.updateTodoStatus(it, isChecked,
-                        onSuccess = {
-                            // Update UI based on the new completion status
-                            if (isChecked) {
-                                // Set text color and apply strike-through effect if task is completed
-                                todoTitle.setTextColor(ContextCompat.getColor(context, R.color.text_completed))
-                                todoDescription.setTextColor(ContextCompat.getColor(context, R.color.text_completed))
-                                todoTitle.paintFlags = todoTitle.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                                todoDescription.paintFlags = todoDescription.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                            } else {
-                                // Set text color to normal and remove strike-through effect if task is not completed
-                                todoTitle.setTextColor(ContextCompat.getColor(context, R.color.text_normal))
-                                todoDescription.setTextColor(ContextCompat.getColor(context, R.color.text_normal))
-                                todoTitle.paintFlags = todoTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
-                                todoDescription.paintFlags = todoDescription.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                    todo.id?.let { todoId ->
+                        todoItemViewModel.updateTodoStatus(it, isChecked,
+                            onSuccess = {
+                                // Update UI based on the new completion status
+                                if (isChecked) {
+                                    // Set text color and apply strike-through effect if task is completed
+                                    todoTitle.setTextColor(
+                                        ContextCompat.getColor(
+                                            context,
+                                            R.color.text_completed
+                                        )
+                                    )
+                                    todoDescription.setTextColor(
+                                        ContextCompat.getColor(
+                                            context,
+                                            R.color.text_completed
+                                        )
+                                    )
+                                    todoTitle.paintFlags =
+                                        todoTitle.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                                    todoDescription.paintFlags =
+                                        todoDescription.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                                } else {
+                                    // Set text color to normal and remove strike-through effect if task is not completed
+                                    todoTitle.setTextColor(
+                                        ContextCompat.getColor(
+                                            context,
+                                            R.color.text_uncompleted
+                                        )
+                                    )
+                                    todoDescription.setTextColor(
+                                        ContextCompat.getColor(
+                                            context,
+                                            R.color.text_uncompleted
+                                        )
+                                    )
+                                    todoTitle.paintFlags =
+                                        todoTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                                    todoDescription.paintFlags =
+                                        todoDescription.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                                }
+                            },
+                            onFailure = { exception ->
+                                // Handle error if unable to update completion status
+                                Log.e(
+                                    "RecyclerViewAdapter",
+                                    "Failed to update completion status: ${exception.message}"
+                                )
                             }
-                        },
-                        onFailure = { exception ->
-                            // Handle error if unable to update completion status
-                            Log.e("RecyclerViewAdapter", "Failed to update completion status: ${exception.message}")
-                        }
-                    )
+                        )
+                    }
                 }
             }
 
@@ -96,27 +150,14 @@ class RecyclerViewAdapter(
                     },
                     onFailure = { exception ->
                         // Handle error if unable to fetch todo item details
-                        Log.e("RecyclerViewAdapter", "Failed to fetch todo item details: ${exception.message}")
+                        Log.e(
+                            "RecyclerViewAdapter",
+                            "Failed to fetch todo item details: ${exception.message}"
+                        )
                     }
                 )
             }
-
-            // Set click listener for item view
-            holder.binding.root.setOnClickListener {
-                // Navigate to ToDoItemDetailsActivity and pass todo item details
-                val intent = Intent(context, ToDoItemDetailsActivity::class.java).apply {
-                    putExtra("TODO_ID", todo.id) // Pass the document ID
-                    putExtra("TODO_TITLE", todo.title)
-                    putExtra("TODO_DESCRIPTION", todo.description)
-                    putExtra("TODO_DUE_DATE", todo.dueDate)
-                    putExtra("TODO_STATUS", todo.status)
-                    putExtra("HAS_DUE_DATE", todo.hasDueDate)
-                    putExtra("PAST_DUE", todo.pastDue)
-                }
-                context.startActivity(intent)
-            }
         }
-
     }
 
     fun updateTodoList(newTodos: List<TodoItem>) {

@@ -4,13 +4,10 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import ca.georgiancollege.comp3025_w24_assignment_4.R
 import ca.georgiancollege.comp3025_w24_assignment_4.adapters.RecyclerViewAdapter
 import ca.georgiancollege.comp3025_w24_assignment_4.databinding.ActivityMainBinding
 import ca.georgiancollege.comp3025_w24_assignment_4.models.TodoItem

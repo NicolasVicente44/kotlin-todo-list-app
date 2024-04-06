@@ -105,6 +105,10 @@ class ToDoItemDetailsActivity : Activity() {
             showDeleteConfirmationDialog()
         }
 
+        binding.cancelButton.setOnClickListener {
+            showCancelConfirmationDialog()
+        }
+
 
 
         binding.updateButton.setOnClickListener {
@@ -162,6 +166,51 @@ class ToDoItemDetailsActivity : Activity() {
         if (!hasDueDate) {
             binding.calendarView.visibility = View.INVISIBLE
             binding.linearLayout2.visibility = View.INVISIBLE
+        }
+    }
+
+
+    // Function to show the delete confirmation dialog
+    private fun showCancelConfirmationDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Cancel Changes to Todo Item")
+        builder.setMessage("Are you sure you want to cancel changes to this todo item?")
+        builder.setPositiveButton("Yes") { _, _ ->
+            // User clicked Yes button, proceed with deletion
+            cancelChange()
+        }
+        builder.setNegativeButton("No") { dialog, _ ->
+            // User clicked No button, dismiss the dialog
+            dialog.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+
+    private fun cancelChange() {
+        if (todoItemId != null) {
+            val title = intent.getStringExtra("TODO_TITLE")
+            val description = intent.getStringExtra("TODO_DESCRIPTION")
+            val dueDate = intent.getStringExtra("TODO_DUE_DATE")
+            val status = intent.getBooleanExtra("TODO_STATUS", false)
+            var hasDueDate = intent.getBooleanExtra("HAS_DUE_DATE", false)
+            val pastDue = intent.getBooleanExtra("PAST_DUE", false)
+            todoItemId = intent.getStringExtra("TODO_ID") // Retrieve the todo item ID
+            val documentId = intent.getStringExtra("DOCUMENT_ID") // Retrieve the document ID
+
+            binding.todoTitleDetails.setText(title)
+            binding.todoDetailsDescription.setText(description)
+            binding.todoDueDate.text = dueDate
+            binding.detailStatusSwitch.isChecked = status
+            binding.calendarStatusSwitch.isChecked = hasDueDate
+            showToast("Todo item change cancelled")
+
+
+
+        } else {
+            // Log an error if todoItemId is null
+            showToast("Todo item ID is null or failed to cancel")
         }
     }
 

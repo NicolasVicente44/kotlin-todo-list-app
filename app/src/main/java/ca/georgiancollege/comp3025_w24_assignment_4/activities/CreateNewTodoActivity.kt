@@ -125,8 +125,8 @@ class CreateNewTodoActivity : Activity() {
         }
 
         // Check if any of the required fields are empty
-        if (title.isEmpty() || description.isEmpty()) {
-            showToast("Please fill in all fields.")
+        if (title.isEmpty()) {
+            showToast("Please add a title.")
             return
         }
 
