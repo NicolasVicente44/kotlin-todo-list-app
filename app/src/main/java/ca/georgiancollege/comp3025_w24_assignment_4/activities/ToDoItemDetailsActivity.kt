@@ -92,8 +92,10 @@ class ToDoItemDetailsActivity : Activity() {
         }
 
         binding.calendarStatusSwitch.post {
-            binding.calendarStatusSwitch.isChecked =
-                hasDueDate // Set the switch based on the status
+            binding.calendarStatusSwitch.isChecked = hasDueDate // Set the switch based on the status
+            if (!hasDueDate) {
+                binding.todoDueDate.text = ""
+            }
         }
 
         // Set text color based on due date
@@ -104,6 +106,23 @@ class ToDoItemDetailsActivity : Activity() {
         }
 
 
+
+        binding.updateButton.setOnClickListener {
+            if (todoItemId != null) {
+                // Update the TodoItem object with the new values
+                todoItem.title = binding.todoTitleDetails.text.toString()
+                todoItem.description = binding.todoDetailsDescription.text.toString()
+                todoItem.dueDate = binding.todoDueDate.text.toString()
+                todoItem.status = binding.detailStatusSwitch.isChecked
+                todoItem.hasDueDate = binding.calendarStatusSwitch.isChecked
+
+                // Check if documentId is not null before calling showUpdateConfirmationDialog
+                showUpdateConfirmationDialog(todoItem, todoItemId!!)
+            } else {
+                // Display an error message or handle the case where the documentId is null
+                showToast("Unable to update the todo item. Document ID is missing.")
+            }
+        }
 
 
 
@@ -163,24 +182,25 @@ class ToDoItemDetailsActivity : Activity() {
         dialog.show()
     }
 
-
     private fun updateTodoItem(todoItem: TodoItem, documentId: String) {
-        todoItemViewModel.updateTodoItem(
-            todoItem,
-            documentId,
-            onSuccess = {
-                // Log success message
-                showToast("Todo updated successfully")
-                // Finish the activity to go back to the previous screen
-                finish()
-            },
-            onFailure = { exception ->
-                // Log error message
-                showToast("Todo update failed")
-            }
-        )
+        todoItemId?.let {
+            todoItemViewModel.updateTodoItem(
+                todoItem,
+                it,
+                onSuccess = {
+                    // Log success message
+                    showToast("Todo updated successfully")
+                    // Finish the activity to go back to the previous screen
+                    val intent = Intent(this@ToDoItemDetailsActivity, MainActivity::class.java)
+                    startActivity(intent)
+                },
+                onFailure = { exception ->
+                    // Log error message
+                    showToast("Todo update failed")
+                }
+            )
+        }
     }
-
 
     // Function to show the delete confirmation dialog
     private fun showDeleteConfirmationDialog() {

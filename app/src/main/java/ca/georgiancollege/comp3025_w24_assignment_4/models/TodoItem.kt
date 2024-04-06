@@ -8,10 +8,10 @@ import java.util.*
 
 data class TodoItem(
     var id: String? = null,
-    val title: String = "",
-    val description: String = "",
-    val hasDueDate: Boolean = false,
-    val dueDate: String = getCurrentDate(),
+    var title: String = "",
+    var description: String = "",
+    var hasDueDate: Boolean = false,
+    var dueDate: String = getCurrentDate(),
     val pastDue: Boolean = dueDate < getCurrentDate(),
     var status: Boolean = false,
 ) {
