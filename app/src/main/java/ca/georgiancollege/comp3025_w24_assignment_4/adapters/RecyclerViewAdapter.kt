@@ -2,6 +2,7 @@ package ca.georgiancollege.comp3025_w24_assignment_4.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Paint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -36,9 +37,37 @@ class RecyclerViewAdapter(
             todoDescription.text = todo.description
             todoDueDate.text = todo.dueDate
 
-            // Set text color based on status
-            val statusColor = if (todo.status) R.color.text_completed else R.color.text_uncompleted
-            todoTitle.setTextColor(ContextCompat.getColor(context, statusColor))
+            // Set switch state based on the status of the TodoItem
+            todoMainStatusSwitch.isChecked = todo.status
+
+            // Set click listener for the completion status indicator (e.g., a CheckBox or a Switch)
+            todoMainStatusSwitch.setOnCheckedChangeListener { _, isChecked ->
+                // Update the completion status of the corresponding TodoItem
+                todo.id?.let {
+                    todoItemViewModel.updateTodoStatus(it, isChecked,
+                        onSuccess = {
+                            // Update UI based on the new completion status
+                            if (isChecked) {
+                                // Set text color and apply strike-through effect if task is completed
+                                todoTitle.setTextColor(ContextCompat.getColor(context, R.color.text_completed))
+                                todoDescription.setTextColor(ContextCompat.getColor(context, R.color.text_completed))
+                                todoTitle.paintFlags = todoTitle.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                                todoDescription.paintFlags = todoDescription.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                            } else {
+                                // Set text color to normal and remove strike-through effect if task is not completed
+                                todoTitle.setTextColor(ContextCompat.getColor(context, R.color.text_normal))
+                                todoDescription.setTextColor(ContextCompat.getColor(context, R.color.text_normal))
+                                todoTitle.paintFlags = todoTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                                todoDescription.paintFlags = todoDescription.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                            }
+                        },
+                        onFailure = { exception ->
+                            // Handle error if unable to update completion status
+                            Log.e("RecyclerViewAdapter", "Failed to update completion status: ${exception.message}")
+                        }
+                    )
+                }
+            }
 
             // Call function to update due date text color
             updateDueDateTextColor(todoDueDate, todo.dueDate)
@@ -87,6 +116,7 @@ class RecyclerViewAdapter(
                 context.startActivity(intent)
             }
         }
+
     }
 
     fun updateTodoList(newTodos: List<TodoItem>) {

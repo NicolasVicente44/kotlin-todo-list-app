@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import android.app.AlertDialog
+import android.graphics.Paint
 import ca.georgiancollege.comp3025_w24_assignment_4.models.TodoItem
 
 
@@ -63,7 +64,21 @@ class ToDoItemDetailsActivity : Activity() {
             pastDue = pastDue // Use the provided pastDue value
         )
 
-
+        binding.detailStatusSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                // Set the text color and apply strike-through effect if the switch is checked (i.e., task is completed)
+                binding.todoTitleDetails.setTextColor(ContextCompat.getColor(this, R.color.text_completed))
+                binding.todoDetailsDescription.setTextColor(ContextCompat.getColor(this, R.color.text_completed))
+                binding.todoTitleDetails.paintFlags = binding.todoTitleDetails.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                binding.todoDetailsDescription.paintFlags = binding.todoDetailsDescription.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            } else {
+                // Set the text color to normal if the switch is unchecked (i.e., task is not completed)
+                binding.todoTitleDetails.setTextColor(ContextCompat.getColor(this, R.color.text_uncompleted))
+                binding.todoDetailsDescription.setTextColor(ContextCompat.getColor(this, R.color.text_uncompleted))
+                binding.todoTitleDetails.paintFlags = binding.todoTitleDetails.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                binding.todoDetailsDescription.paintFlags = binding.todoDetailsDescription.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            }
+        }
 
         // Update EditText fields with todo item details
         binding.todoTitleDetails.setText(title)

@@ -21,8 +21,8 @@
     <color name="text_due_today">#F1B457</color> <!-- Yellow color for today due dates -->
 
 
-    <color name="text_completed">#00FF05</color> <!-- Yellow color for today due dates -->
-    <color name="text_uncompleted">#FF0000</color> <!-- Yellow color for today due dates -->
+    <color name="text_completed">#656565</color> <!-- Yellow color for today due dates -->
+    <color name="text_uncompleted">#FFFFFF</color> <!-- Yellow color for today due dates -->
     <color name="text_gray">#676767</color> <!-- Yellow color for today due dates -->
 
 

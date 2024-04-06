@@ -110,7 +110,6 @@ class CreateNewTodoActivity : Activity() {
         // Retrieve user-entered data
         val title = binding.todoCreateTitle.text.toString()
         val description = binding.todoCreateDescription.text.toString()
-        val status = binding.todoCreateStatusSwitch.isChecked
         val hasDueDate = binding.todoCreateCalendarSwitch.isChecked
 
         val dueDate = if (hasDueDate) {
@@ -136,7 +135,6 @@ class CreateNewTodoActivity : Activity() {
             title = title,
             description = description,
             dueDate = dueDate,
-            status = status,
             hasDueDate = hasDueDate
         )
 
@@ -164,8 +162,7 @@ class CreateNewTodoActivity : Activity() {
         binding.todoCreateTitle.text.clear()
         binding.todoCreateDescription.text.clear()
 
-        // Reset status switch to unchecked
-        binding.todoCreateStatusSwitch.isChecked = false
+
 
         // Reset calendar switch to unchecked and disable calendar view
         binding.todoCreateCalendarSwitch.isChecked = false
