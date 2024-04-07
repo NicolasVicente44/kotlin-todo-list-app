@@ -44,14 +44,14 @@ class RecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val todo = dataSet[position]
         holder.binding.apply {
-            val truncatedTitle = if (todo.title.length > 10) {
-                "${todo.title.substring(0, 18)}..." // Truncate if title length exceeds 10
+            val truncatedTitle = if (todo.title.length > 18) {
+                "${todo.title.substring(0, 18)}..." // Truncate if title length exceeds 18
             } else {
-                todo.title // Keep the original title if it's shorter than 10 characters
+                todo.title // Keep the original title if it's shorter than 20 characters
             }
             todoTitle.text = truncatedTitle
             // Bind description with max length of 10 characters
-            val truncatedDescription = if (todo.description.length > 10) {
+            val truncatedDescription = if (todo.description.length > 20) {
                 "${todo.description.substring(0, 20)}..." // Truncate if description length exceeds 10
             } else {
                 todo.description // Keep the original description if it's shorter than 10 characters
