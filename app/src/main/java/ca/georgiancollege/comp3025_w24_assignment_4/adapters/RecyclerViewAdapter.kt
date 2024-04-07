@@ -44,8 +44,24 @@ class RecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val todo = dataSet[position]
         holder.binding.apply {
-            todoTitle.text = todo.title
-            todoDescription.text = todo.description
+            val truncatedTitle = if (todo.title.length > 10) {
+                "${todo.title.substring(0, 18)}..." // Truncate if title length exceeds 10
+            } else {
+                todo.title // Keep the original title if it's shorter than 10 characters
+            }
+            todoTitle.text = truncatedTitle
+            // Bind description with max length of 10 characters
+            val truncatedDescription = if (todo.description.length > 10) {
+                "${todo.description.substring(0, 20)}..." // Truncate if description length exceeds 10
+            } else {
+                todo.description // Keep the original description if it's shorter than 10 characters
+            }
+
+            todoDescription.text = truncatedDescription
+
+            todoDueDate.text = todo.dueDate
+
+
             todoDueDate.text = todo.dueDate
 
             // Set switch state based on the status of the TodoItem
