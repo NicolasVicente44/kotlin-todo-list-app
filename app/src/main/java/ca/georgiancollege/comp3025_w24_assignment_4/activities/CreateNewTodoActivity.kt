@@ -1,9 +1,20 @@
 package ca.georgiancollege.comp3025_w24_assignment_4.activities
 
+
 /**
+ * CreateNewTodoActivity file
+ * Nicolas Vicente
+ * 200539594
+ * 2024-04-07
+ * assignment 4, the todo list app functionality that uses mvvm and firebase realtime db to allow the user to
+ * create, read, update, and delete a todo item use a main activity, details, and create activity along with a splash screen
+ *
  * create new todo class that handles the create a new todo funcitonality once the user clicks on the
- * floating actions button in the main activity
- */
+ * floating action button in the main activity to create a new todo, calls the methods to intereact with the database
+ * */
+
+
+
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -31,9 +42,11 @@ class CreateNewTodoActivity : Activity() {
     private lateinit var binding: CreateNewTodoBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        //view bidning
         super.onCreate(savedInstanceState)
         binding = CreateNewTodoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //android navitgation buttons changes
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
         }
@@ -48,6 +61,8 @@ class CreateNewTodoActivity : Activity() {
         binding.createButton.setOnClickListener {
             createTodo()
         }
+
+        //cancel button listener
         binding.createActivtiyCancelButton.setOnClickListener {
             cancelTodoCreation()
         }
@@ -64,11 +79,13 @@ class CreateNewTodoActivity : Activity() {
                 binding.todoCreateDueDate.text = currentDate
                 updateDueDateTextColor(binding.todoCreateDueDate, currentDate)
             } else {
+                //close calendar view
                 animatePopDown(binding.calendarView)
                 animatePopDown(binding.linearLayout2)
             }
         }
 
+        //listener for calendar view and date setter
         binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             val selectedDate =
                 String.format(Locale.getDefault(), "%04d-%02d-%02d", year, month + 1, dayOfMonth)
@@ -76,6 +93,8 @@ class CreateNewTodoActivity : Activity() {
             updateDueDateTextColor(binding.todoCreateDueDate, selectedDate)
         }
     }
+
+    //animation for calendar view
     private fun animatePopUp(view: View) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val cx = view.width / 2
@@ -89,6 +108,7 @@ class CreateNewTodoActivity : Activity() {
         }
     }
 
+    //animation for calendar view
     private fun animatePopDown(view: View) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val cx = view.width / 2
@@ -106,6 +126,8 @@ class CreateNewTodoActivity : Activity() {
             view.visibility = View.INVISIBLE
         }
     }
+
+    //calling of todo creation in realtime db
     private fun createTodo() {
         // Retrieve user-entered data
         val title = binding.todoCreateTitle.text.toString()
@@ -157,6 +179,8 @@ class CreateNewTodoActivity : Activity() {
         )
     }
 
+
+    //cancel button handling
     private fun cancelTodoCreation() {
         // Reset title and description fields
         binding.todoCreateTitle.text.clear()
@@ -175,17 +199,22 @@ class CreateNewTodoActivity : Activity() {
         showToast("Todo creation canceled")
     }
 
+    //date validation
     private fun validateDateFormat(date: String): Boolean {
         val regex = """^\d{4}-\d{2}-\d{2}$""".toRegex()
         return regex.matches(date)
     }
 
+
+    //show toast pop up mesasges
     private fun showToast(message: String) {
         val toast = Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT)
         toast.setGravity(Gravity.TOP, 0, 100) // Adjust the Y offset as needed
         toast.show()
     }
 
+
+    //update text colour of the date based on the current date function
     private fun updateDueDateTextColor(todoDueDate: TextView, date: String?) {
         if (date != null && date.isNotEmpty()) {
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())

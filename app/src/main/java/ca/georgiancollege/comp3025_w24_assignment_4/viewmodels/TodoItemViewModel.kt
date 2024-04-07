@@ -7,6 +7,16 @@ import androidx.lifecycle.viewModelScope
 import ca.georgiancollege.comp3025_w24_assignment_4.data.DataManager
 import ca.georgiancollege.comp3025_w24_assignment_4.models.TodoItem
 import kotlinx.coroutines.launch
+/**
+ * TodoViewModel file
+ * Nicolas Vicente
+ * 200539594
+ * 2024-04-07
+ * assignment 4, the todo list app functionality that uses mvvm and firebase realtime db to allow the user to
+ * create, read, update, and delete a todo item use a main activity, details, and create activity along with a splash screen
+ *
+ * This file is the view model for the todo item and handles the datamanager methods
+ */
 
 class TodoItemViewModel(private val dataManager: DataManager = DataManager()) : ViewModel() {
 

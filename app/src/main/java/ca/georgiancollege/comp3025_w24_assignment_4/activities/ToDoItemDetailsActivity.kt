@@ -25,6 +25,19 @@ import android.app.AlertDialog
 import android.graphics.Paint
 import ca.georgiancollege.comp3025_w24_assignment_4.models.TodoItem
 
+/**
+ * TodoItemDetailsActivity file
+ * Nicolas Vicente
+ * 200539594
+ * 2024-04-07
+ * assignment 4, the todo list app functionality that uses mvvm and firebase realtime db to allow the user to
+ * create, read, update, and delete a todo item use a main activity, details, and create activity along with a splash screen
+ *
+ * this file contorls the details activitiy and its interaction with the main activity and the firebase realtime db, allowing the user
+ * to create and update the todo or cancel editing it
+ */
+
+
 
 class ToDoItemDetailsActivity : Activity() {
     private lateinit var todoItemViewModel: TodoItemViewModel

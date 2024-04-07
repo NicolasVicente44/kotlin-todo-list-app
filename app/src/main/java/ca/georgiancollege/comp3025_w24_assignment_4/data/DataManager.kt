@@ -3,6 +3,16 @@ package ca.georgiancollege.comp3025_w24_assignment_4.data
 import android.util.Log
 import ca.georgiancollege.comp3025_w24_assignment_4.models.TodoItem
 import com.google.firebase.database.*
+/**
+ * DataManager file
+ * Nicolas Vicente
+ * 200539594
+ * 2024-04-07
+ * assignment 4, the todo list app functionality that uses mvvm and firebase realtime db to allow the user to
+ * create, read, update, and delete a todo item use a main activity, details, and create activity along with a splash screen
+ *
+ * This file handles the database interaction for the crud methods
+ */
 
 class DataManager {
     private val database = FirebaseDatabase.getInstance()

@@ -16,6 +16,17 @@ import ca.georgiancollege.comp3025_w24_assignment_4.models.TodoItem
 import ca.georgiancollege.comp3025_w24_assignment_4.viewmodels.TodoItemViewModel
 import java.text.SimpleDateFormat
 import java.util.*
+/**
+ * RecyclerViewAdapter file
+ * Nicolas Vicente
+ * 200539594
+ * 2024-04-07
+ * assignment 4, the todo list app functionality that uses mvvm and firebase realtime db to allow the user to
+ * create, read, update, and delete a todo item use a main activity, details, and create activity along with a splash screen
+ *
+ * this file allows the main activity to load the todos from the realtime firebase database into a recycler view
+ * and handles loading the deatails page when the user clicks on the edit button in the list
+ */
 
 class RecyclerViewAdapter(
     private var dataSet: List<TodoItem>,

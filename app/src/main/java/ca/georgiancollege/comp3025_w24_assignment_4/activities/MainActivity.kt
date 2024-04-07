@@ -1,3 +1,17 @@
+/**
+ * MainActivity file
+ * Nicolas Vicente
+ * 200539594
+ * 2024-04-07
+ * assignment 4, the todo list app functionality that uses mvvm and firebase realtime db to allow the user to
+ * create, read, update, and delete a todo item use a main activity, details, and create activity along with a splash screen
+ *
+ * this file controls the main activity and its interaction with the adapter that loads the todos into the recycler view
+ */
+
+
+
+
 package ca.georgiancollege.comp3025_w24_assignment_4.activities
 import android.content.Intent
 import android.os.Build
@@ -18,11 +32,17 @@ import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
+    //instance varibles for the adapter, recycler view, and viewmodel
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: RecyclerViewAdapter
     private lateinit var todoItemViewModel: TodoItemViewModel
 
+    companion object {
+        const val CREATE_TODO_REQUEST_CODE = 1
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        //viewe bidning init
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -44,7 +64,6 @@ class MainActivity : AppCompatActivity() {
         // Call getAllTodoItems() to fetch todo items
         todoItemViewModel.getAllTodoItems()
 
-
         // Observe the todo list from the ViewModel
         todoItemViewModel.allTodoItems.observe(this, Observer { todos ->
             todos?.let {
@@ -53,22 +72,24 @@ class MainActivity : AppCompatActivity() {
                 for ((index, todo) in todos.withIndex()) {
                     Log.d("TODO", "Todo $index: $todo")
                 }
-
-
             }
         })
-
-
 
         // Set up FloatingActionButton OnClickListener for the create page to create a new todo
         binding.addMovieFAB.setOnClickListener {
             // Start the CreateNewTodoActivity
             val intent = Intent(this, CreateNewTodoActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, CREATE_TODO_REQUEST_CODE)
         }
     }
 
-
-
+    //refreshing the list
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CREATE_TODO_REQUEST_CODE && resultCode == RESULT_OK) {
+            // Refresh data after creating new todo item
+            todoItemViewModel.getAllTodoItems()
+        }
+    }
 }
 
